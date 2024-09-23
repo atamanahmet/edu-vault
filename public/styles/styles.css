@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.navbar {
+    margin: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+.logoName {
+    margin-left: 0.5rem;
+    font-family: "Fira Code";
+    font-size: 1.2rem;
+    background-color: firebrick;
+    color: whitesmoke;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 50px;
+}
+.navLinks{
+    margin-left: 2rem;
+    font-family: "Fira Code";
+}
+input[value="asd"]{
+    background-color: antiquewhite;
+}
