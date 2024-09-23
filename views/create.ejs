@@ -1,0 +1,18 @@
+<%- include("partials/header.ejs")%>
+
+<fieldset>
+  
+      <form action="/create" method="post" class="form">
+        <div class="postTitle">
+        <label for="title">Enter a title</label>
+    </div>
+        <input type="text" name="postTitle" id="postTitle"></input>
+        
+        <textarea name="blogPost"></textarea>
+        <input type="submit" value="create" />
+      </form>
+    
+
+</fieldset>
+
+<%- include("partials/footer.ejs")%>

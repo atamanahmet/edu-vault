@@ -1,7 +1,14 @@
 <%- include("partials/header.ejs") %>
 
- <div class="title"> 
-<h1>Blog for U</h1>
-</div>
 
+<h1 class="title">Posts</h1>
+<div class="posts">
+    <% if(locals.posted){%>
+        <h2><%= posted %></h2>
+    <%} else {console.log("noinput");
+        // console.log(postTitle);
+    } %>
+
+
+</div>
 <%- include("partials/footer.ejs") %>

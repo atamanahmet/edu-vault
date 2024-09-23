@@ -3,8 +3,45 @@
     padding: 0;
     box-sizing: border-box;
 }
+#postTitle{
+    width: 400px;
+    margin-left: 1rem;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+}
+.postTitle{
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+.posts{
+    margin: 1rem;
+}
+.form{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    height: 100%;
+}
+fieldset{
+    margin-left: 6rem;
+    margin-right: 6rem;
+    height: 600px;
+    border-radius: 20px;
+}
+textarea{
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 20px;
+    height: 300px;
+    width: 400px;
+}
+/* .container{
+   
+} */
 .title{
-    margin-top: 70px;
+    margin: 1rem;
+    /* margin-top: 70px; */
     font-size: 2rem;
 }
 .navbar {
@@ -17,10 +54,10 @@
     text-align: center;
     line-height: 50px;
     justify-content: space-between;
-    position: fixed;
-    top: 0;
+    /* position: fixed;
+    top: 0; */
     width: 99vw;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 .logoName {
     margin-left: 0.5rem;
@@ -47,6 +84,17 @@ input[value="New Post"]{
    color: whitesmoke;
    border: none;
    margin-right: 0.5rem; 
+}
+input[value="create"]{
+   border-radius: 20px;
+   height: 40px;
+   width: 100px;
+   margin-left: 1rem;
+   justify-self: flex-end;
+   background-color: firebrick;
+   color: whitesmoke;
+   border: none;
+   /* margin-right: 0.5rem;  */
 }
 .leftNav, .rightNav
 {
