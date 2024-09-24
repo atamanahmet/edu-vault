@@ -3,13 +3,19 @@
     padding: 0;
     box-sizing: border-box;
 }
-#postTitle{
+/* .posts{
+    width: 200px;
+}
+.inPost{
+    width: 100px;
+} */
+/* #postTitle{
     width: 400px;
     margin-left: 1rem;
     border-radius: 20px;
     margin-top: 0.5rem;
     padding: 0.5rem;
-}
+} */
 .postTitle{
     margin-top: 1rem;
     margin-left: 1rem;

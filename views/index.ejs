@@ -1,14 +1,23 @@
 <%- include("partials/header.ejs") %>
 
-
 <h1 class="title">Posts</h1>
+<hr />
 <div class="posts">
-    <% if(locals.posted){%>
-        <h2><%= posted %></h2>
-    <%} else {console.log("noinput");
-        // console.log(postTitle);
-    } %>
+ <% console.log(locals.posted);
+ 
+ for(const [title, post] of Object.entries(posted)){
+  if(title!="_locals"){
+  %>
+  <li>
+    <a href="viewPosts"></a>
+    <%= title %>
+    </li>
+ <%}}%>
+ 
+ %>
+  
 
+  <br />
 
+  <%-include("partials/footer.ejs") %>
 </div>
-<%- include("partials/footer.ejs") %>
