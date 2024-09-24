@@ -3,21 +3,22 @@
 <h1 class="title">Posts</h1>
 <hr />
 <div class="posts">
- <% console.log(locals.posted);
- 
- for(const [title, post] of Object.entries(posted)){
-  if(title!="_locals"){
-  %>
-  <li>
-    <a href="viewPosts"></a>
-    <%= title %>
+  <% if(locals.posted){ console.log(locals.posted); for(const [title, post] of
+  Object.entries(posted)){ if(title!="_locals"){ %>
+  <ul>
+    <li>
+      <form action="/viewPosts" method="post">
+        <button class="aref" type="submit" name="<%=title%>">
+        <%=title%>
+          
+        
+          </button>
+      </form>
     </li>
- <%}}%>
- 
- %>
-  
+  </ul>
+  <%}}} else{ console.log("noinput"); }%>
 
   <br />
-
-  <%-include("partials/footer.ejs") %>
 </div>
+
+<%-include("partials/footer.ejs") %>

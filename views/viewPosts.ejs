@@ -1,0 +1,22 @@
+<%- include("partials/header.ejs") %> 
+<% var title = Object.keys(sendObj)[0];
+if(locals.sendObj){%>
+
+<div class="viewEdit">
+  <h1><%= title%></h1>
+  <hr />
+  <form action="/edit" method="post">
+    <button type="submit" name="<%=Object.keys(sendObj)[0]%>" id="editBtn">Edit Post</button>
+  </form>
+  <form action="/delete" method="post">
+    <button type="submit" name="<%=Object.keys(sendObj)[0]%>" id="deleteBtn">Delete</button>
+  </form>
+
+</div>
+
+<br />
+
+<p class="text"><%= sendObj[title]%></p>
+
+<%} %> <% // console.log("posted "+posted); // console.log("url: "+ url); %>
+<%-include("partials/footer.ejs") %>
