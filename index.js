@@ -46,10 +46,9 @@ app.post("/edit", (req,res) => {
   currentPost = Object.keys(req.body)[0];
   sendObj[currentPost]= posted[currentPost];
   res.locals.sendObj= sendObj;
-  
-  
   res.render("edit.ejs", sendObj);
 })
+
 app.post("/delete", (req,res) => {
   
 delete posted[Object.keys(req.body)[0]]
