@@ -1,0 +1,33 @@
+main{
+    margin: 5rem;
+}
+.btn-signUp{
+    background-color: #F1602C;
+    color: white;
+}
+.search:focus{
+    outline: solid #F1602C;
+
+    /* outline-color: #F1602C; */
+    
+}
+.search:active{
+    outline: none;
+}
+.search {
+    color: #EC8922;
+}
+.add{
+    background-color: #F1602C;
+    color: white;
+}
+.add:hover{
+    background-color: #D52429;
+    color: white;
+}
+
+.card{
+    margin-bottom: 2rem;
+    /* background-color: #6C3F18; */
+    /* color: whitesmoke; */
+}
