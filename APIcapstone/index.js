@@ -22,11 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", async (req, res) => {
   try {
     const url="https://api.themoviedb.org/3/discover/movie?" + apiKey
-    console.log(url);
     const response = await axios.get(url);
     res.render("index.ejs", { content: response.data.results });
   } catch (error) {
-    // console.log(error);
+    console.log(error.message);
   }
 });
 app.get("/nextpage", async (req, res) => {
@@ -57,7 +56,7 @@ app.post("/search", async (req, res) => {
       res.render("index.ejs", { content: searchBuffer });
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });
 
@@ -72,7 +71,7 @@ app.post("/add", async (req, res) => {
     userdat(response.data);
     res.redirect("/profile")
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });
 app.post("/remove", (req,res) => {
