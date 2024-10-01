@@ -1,15 +1,13 @@
 <div class="container">
  <div class="row gap-1">
-     <% 
-        for(let i=0; i<content.length; i++){
-            var posterPath="https://image.tmdb.org/t/p/original"+content[i].poster_path;%>
+     <% for(let i=0; i<content.length; i++){var posterPath="https://image.tmdb.org/t/p/original"+content[i].poster_path;%>
          <div class="col mg-0">
             <div class="card" style="width: 12rem;height: 28rem;">
                 <form action="/moreInfo" method="post">
-                <input type="hidden" name="<%=content[i].id %>">
-                <a onclick="this.parentNode.submit();">
-                <img src="<%=posterPath%>" class="card-img-top" height="270"/>
-            </a>
+                    <input type="image" src="<%=posterPath%>" class="card-img-top" name="<%=content[i].id%>" onclick="submit()">
+                
+            </input>
+            </form>
                  <div class="card-body">
                   <h5 class="card-title">
                       <%=content[i].original_title %>

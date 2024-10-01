@@ -4,7 +4,7 @@ import fs from "fs";
 
 const port = 3000;
 const app = express();
-const getApi = false;
+const getApi = true;
 const apiKey = JSON.parse(fs.readFileSync("apiKey.json", "utf-8"));
 
 var searchBuffer = JSON.parse(fs.readFileSync("api.json", "utf-8"));
@@ -98,7 +98,8 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/moreInfo", async (req,res) => {
-  const id = Object.keys(req.body)[0];
+
+  const id = Object.keys(req.body)[0].slice(0, -2)
   try {
     const response = await axios.get(
       "https://api.themoviedb.org/3/movie/" + id+"?" + apiKey
