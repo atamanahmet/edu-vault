@@ -5,7 +5,11 @@
             var posterPath="https://image.tmdb.org/t/p/original"+content[i].poster_path;%>
          <div class="col mg-0">
             <div class="card" style="width: 12rem;height: 28rem;">
+                <form action="/moreInfo" method="post">
+                <input type="hidden" name="<%=content[i].id %>">
+                <a onclick="this.parentNode.submit();">
                 <img src="<%=posterPath%>" class="card-img-top" height="270"/>
+            </a>
                  <div class="card-body">
                   <h5 class="card-title">
                       <%=content[i].original_title %>

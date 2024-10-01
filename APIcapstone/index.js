@@ -98,6 +98,19 @@ app.get("/profile", (req, res) => {
   res.render("profile.ejs", { content: info });
 });
 
+app.post("/moreInfo", async (req,res) => {
+  const id = Object.keys(req.body)[0];
+  try {
+    const response = await axios.get(
+      "https://api.themoviedb.org/3/movie/" + id+"?" + apiKey
+    );
+  //  console.log(response.data);
+    res.render("more.ejs", {content: response.data})
+  } catch (error) {
+    console.log(error.message);
+  }
+})
+
 app.listen(port, (req, res) => {
   console.log("Server Online. Listening port: " + port);
 });

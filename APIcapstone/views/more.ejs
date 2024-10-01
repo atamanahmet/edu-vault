@@ -1,0 +1,30 @@
+<%- include("partials/header.ejs") %>
+
+<main>
+    <% if(locals.content){
+        var posterPath="https://image.tmdb.org/t/p/original"+content.poster_path;%>
+        %>
+        <div class="container" style="border: 1px solid #EC8922; border-radius:75px; padding: 3rem; padding-top: 5rem; margin-top:-60px;box-shadow: 2px 2px 5px #6C3F18;">
+        <div style="text-align: center;  margin-bottom:2rem;margin-top:-60px;">
+        <img src="<%=posterPath %>" alt="" width="500" style="border-radius:50px; box-shadow: 2px 2px 12px #915018;">
+    </div>
+       <h1><%= content.original_title %></h1>
+       <br>
+       <h5><%=content.release_date %></h5>
+       <br>
+       <h5>Rating: <%=content.vote_average.toFixed(2); %></h5>
+       <br>
+       
+       <%content.genres.forEach((item)=>{%>
+        <p style="display: inline-block; border: 1px solid #EC8922; border-radius: 15px; padding-left: .4rem; padding-right: .4rem;margin-right: .4rem;">
+       <%=item.name%>
+    </p>
+        <% }) %>
+    
+       <br>
+       <p><%=content.overview %></p>
+       
+        <%}%>
+    </div>
+</main>
+<%- include("partials/footer.ejs") %>
