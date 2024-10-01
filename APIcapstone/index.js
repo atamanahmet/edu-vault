@@ -4,8 +4,9 @@ import fs from "fs";
 
 const port = 3000;
 const app = express();
-const getApi = true;
-const apiKey = "";
+const getApi = false;
+const apiKey = JSON.parse(fs.readFileSync("apiKey.json", "utf-8"));
+
 var searchBuffer = JSON.parse(fs.readFileSync("api.json", "utf-8"));
 var isProfile=false;
 
@@ -20,12 +21,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
   try {
-    const response = await axios.get(
-      "https://api.themoviedb.org/3/discover/movie?" + apiKey
-    );
+    const url="https://api.themoviedb.org/3/discover/movie?" + apiKey
+    console.log(url);
+    const response = await axios.get(url);
     res.render("index.ejs", { content: response.data.results });
   } catch (error) {
-    console.log(error.message);
+    // console.log(error);
   }
 });
 app.get("/nextpage", async (req, res) => {
@@ -67,7 +68,7 @@ app.post("/add", async (req, res) => {
     const response = await axios.get(
       "https://api.themoviedb.org/3/movie/" + id+"?" + apiKey
     );
-    // console.log(response.data);
+   
     userdat(response.data);
     res.redirect("/profile")
   } catch (error) {
@@ -75,9 +76,7 @@ app.post("/add", async (req, res) => {
   }
 });
 app.post("/remove", (req,res) => {
-  console.log();
-  // var id = Object.keys((req.body)[0]);
-  // console.log(id);
+
   const info =  JSON.parse(fs.readFileSync("user.json", "utf-8"))
   info.forEach((item)=>{
     if(item.id==Object.keys(req.body)[0]){
