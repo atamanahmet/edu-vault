@@ -3,7 +3,7 @@
 <div class="container">
  <div class="row gap-1">
      <% 
-        for(let i=0; i<content.length; i++ ){var posterPath="https://image.tmdb.org/t/p/original"+content[i].poster_path;%>
+        for(let i=0; i<content.length; i++){var posterPath="https://image.tmdb.org/t/p/original"+content[i].poster_path;%>
          <div class="col mg-0">
             <div class="card" style="width: 12rem;">
                 <img src="<%=posterPath%>" class="card-img-top"/>
@@ -14,6 +14,7 @@
                     <p class="card-text"><%= content[i].release_date %></p>
                      <form action="/add" method="post">
                      <input type="submit" class="btn add" value="+ Add" name="<%=content[i].id%>">
+                     
                     </form>
                     </div>
                 </div>

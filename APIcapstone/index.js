@@ -66,6 +66,7 @@ app.post("/add", async (req, res) => {
     );
     // console.log(response.data);
     userdat(response.data);
+    res.redirect("/profile")
   } catch (error) {
     console.log(error.message);
   }
@@ -74,6 +75,7 @@ app.post("/add", async (req, res) => {
 app.get("/profile", (req, res) => {
   const info = JSON.parse(fs.readFileSync("user.json", "utf-8"));
   // console.log(info);
+  
   res.render("profile.ejs", { content: info });
 });
 
