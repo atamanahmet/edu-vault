@@ -43,7 +43,7 @@ app.post("/search", async (req, res) => {
   try {
     if (getApi) {
       const param = req.body.searchQuery.replace(" ", "+");
-      // console.log(param);
+      
       const response = await axios.get(
         "https://api.themoviedb.org/3/search/movie?query=" + param + "&"+apiKey
       );
@@ -61,7 +61,6 @@ app.post("/search", async (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-  console.log(Object.keys(req.body)[0]);
   var id = Object.keys(req.body)[0];
   try {
     const response = await axios.get(
@@ -84,9 +83,9 @@ app.post("/remove", (req,res) => {
       info.splice(index, 1); 
       fs.writeFileSync("user.json", JSON.stringify(info), (err) => {
         if (err) throw err;
-        console.log("Written Succesfully");
+        console.log("Removed Succesfully");
       });
-      console.log("Removed Succesfully");
+      
     }}
   })
   res.redirect("/profile");
@@ -104,7 +103,7 @@ app.post("/moreInfo", async (req,res) => {
     const response = await axios.get(
       "https://api.themoviedb.org/3/movie/" + id+"?" + apiKey
     );
-  //  console.log(response.data);
+
     res.render("more.ejs", {content: response.data})
   } catch (error) {
     console.log(error.message);
