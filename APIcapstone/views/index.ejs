@@ -1,7 +1,9 @@
 <%- include("partials/header.ejs") %>
 
 <main>
-    <%  if(locals.content){%>
+    <%  if(locals.content){buttonValue="+Add";
+    postType="/add";
+    %>
         <%-include("partials/card.ejs")%>
         <%}%>
     

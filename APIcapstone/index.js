@@ -7,17 +7,10 @@ const app = express();
 const getApi = false;
 const apiKey = "api_key=f01bd717d291699c6c6c94f8db61bad3";
 var searchBuffer = JSON.parse(fs.readFileSync("api.json", "utf-8"));
+var isProfile=false;
 
 // Test
-// var obj1={name: "ahmet",
-//   lastname: "ataman"
-// }
-// var obj2={name: "fox",
-//   lastname: "foxitortor"
-// }
 
-// obj1.push(obj2)
-// console.log(obj1);
 
 
 
@@ -68,14 +61,28 @@ app.post("/add", async (req, res) => {
     userdat(response.data);
     res.redirect("/profile")
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 });
+app.post("/remove", (req,res) => {
+  console.log();
+  // var id = Object.keys((req.body)[0]);
+  // console.log(id);
+  const info =  JSON.parse(fs.readFileSync("user.json", "utf-8"))
+  info.forEach((item)=>{
+    if(item.id==Object.keys(req.body)[0]){
+      const index = info.indexOf(item);
+      if(index > -1){
+      info.splice(index, 1); 
+      console.log("Removed Succesfully");
+    }}
+  })
+  res.redirect("/profile");
+})
 
 app.get("/profile", (req, res) => {
+  isProfile=true;
   const info = JSON.parse(fs.readFileSync("user.json", "utf-8"));
-  // console.log(info);
-  
   res.render("profile.ejs", { content: info });
 });
 
@@ -86,22 +93,18 @@ app.listen(port, (req, res) => {
 function userdat(data) {
   const userDataBuffer = JSON.parse(fs.readFileSync("user.json", "utf-8"));
   if (fs.readFileSync("user.json", "utf-8").startsWith("[")) {
-    // console.log("add info : "+ JSON.stringify(data));
+
     var userData = userDataBuffer;
     userData.push(data);
-    console.log("array obj");
     fs.writeFileSync("user.json", JSON.stringify(userData), "utf-8")
-    // console.log(userData);
+
   }
   else {
-    // console.log("add info : "+data);
+
     var userData = [];
     userData.push(userDataBuffer);
     userData.push(data);
     fs.writeFileSync("user.json", JSON.stringify(userData), "utf-8")
-    
-    console.log("obj");
-    // console.log(userData);
   }
   
 }

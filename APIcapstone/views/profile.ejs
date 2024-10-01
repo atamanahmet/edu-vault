@@ -1,7 +1,10 @@
 <%- include("partials/header.ejs") %>
 
 <main>
-    <% if(locals.content){%>
+    <% if(locals.content){
+        buttonValue="-Remove";
+        postType="/remove"
+        %>
         <%- include("partials/card.ejs")%>
         <%}%>
     

@@ -1,26 +1,23 @@
-
-
 <div class="container">
  <div class="row gap-1">
      <% 
-        for(let i=0; i<content.length; i++){var posterPath="https://image.tmdb.org/t/p/original"+content[i].poster_path;%>
+        for(let i=0; i<content.length; i++){
+            var posterPath="https://image.tmdb.org/t/p/original"+content[i].poster_path;%>
          <div class="col mg-0">
-            <div class="card" style="width: 12rem;">
-                <img src="<%=posterPath%>" class="card-img-top"/>
+            <div class="card" style="width: 12rem;height: 28rem;">
+                <img src="<%=posterPath%>" class="card-img-top" height="270"/>
                  <div class="card-body">
                   <h5 class="card-title">
                       <%=content[i].original_title %>
                  </h5>
                     <p class="card-text"><%= content[i].release_date %></p>
-                     <form action="/add" method="post">
-                     <input type="submit" class="btn add" value="+ Add" name="<%=content[i].id%>">
-                     
+                     <form action="<%=postType %>" method="post">
+                     <input type="submit" class="btn add" value="<%=buttonValue %>" name="<%=content[i].id%>">
+                    
                     </form>
                     </div>
                 </div>
             </div>
-            
                 <%}%>
     </div>
-
 </div>
