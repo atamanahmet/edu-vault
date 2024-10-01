@@ -4,7 +4,7 @@ import fs from "fs";
 
 const port = 3000;
 const app = express();
-const getApi = false;
+const getApi = true;
 const apiKey = "api_key=f01bd717d291699c6c6c94f8db61bad3";
 var searchBuffer = JSON.parse(fs.readFileSync("api.json", "utf-8"));
 var isProfile=false;
