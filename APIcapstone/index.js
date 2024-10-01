@@ -21,7 +21,17 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", async (req, res) => {
   try {
     const response = await axios.get(
-      "https://api.themoviedb.org/3/discover/movie?&" + apiKey
+      "https://api.themoviedb.org/3/discover/movie?" + apiKey
+    );
+    res.render("index.ejs", { content: response.data.results });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+app.get("/nextpage", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://api.themoviedb.org/3/discover/movie?page=2&" + apiKey
     );
     res.render("index.ejs", { content: response.data.results });
   } catch (error) {
@@ -74,6 +84,10 @@ app.post("/remove", (req,res) => {
       const index = info.indexOf(item);
       if(index > -1){
       info.splice(index, 1); 
+      fs.writeFileSync("user.json", JSON.stringify(info), (err) => {
+        if (err) throw err;
+        console.log("Written Succesfully");
+      });
       console.log("Removed Succesfully");
     }}
   })

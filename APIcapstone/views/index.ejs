@@ -1,11 +1,10 @@
 <%- include("partials/header.ejs") %>
 
 <main>
-    <%  if(locals.content){buttonValue="+Add";
-    postType="/add";
-    %>
-        <%-include("partials/card.ejs")%>
-        <%}%>
-    
+  <% if(locals.content){buttonValue="+Add"; postType="/add"; color="#F1602C"; %>
+  <%-include("partials/card.ejs")%> <%}%>
+  <div style="text-align: center;">
+  <a href="/nextpage" >Next Page</a>
+</div>
 </main>
 <%- include("partials/footer.ejs") %>
