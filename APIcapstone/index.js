@@ -28,6 +28,7 @@ app.get("/", async (req, res) => {
     console.log(error.message);
   }
 });
+
 app.get("/nextpage", async (req, res) => {
   try {
     const response = await axios.get(
@@ -73,6 +74,7 @@ app.post("/add", async (req, res) => {
     console.log(error.message);
   }
 });
+
 app.post("/remove", (req,res) => {
 
   const info =  JSON.parse(fs.readFileSync("user.json", "utf-8"))
@@ -114,6 +116,7 @@ app.post("/moreInfo", async (req,res) => {
 app.listen(port, (req, res) => {
   console.log("Server Online. Listening port: " + port);
 });
+
 
 function userdat(data) {
   const userDataBuffer = JSON.parse(fs.readFileSync("user.json", "utf-8"));
