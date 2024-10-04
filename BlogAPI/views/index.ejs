@@ -1,0 +1,31 @@
+<%- include("partials/header.ejs") %>
+<main>
+
+    <div class="container">
+        <h1>My Blog</h1>
+        <hr>
+          <%  content.forEach((item)=>{%> 
+            <div class="post">
+                <h2> <%=item.title%></h2>
+                <p><%=item.date%></p>
+                <br>
+                <p><%=item.content%></p>
+                <p>By: <%=item.author%></p>
+                <br>
+                <a class="edit" href="/edit/<%=item.id %>">Edit</a>
+                <a class="delete" href="/posts/delete/<%=item.id %>">Delete</a>
+                <br>
+                <br>
+               
+                
+                <hr>
+            </div>
+                <% })%>
+        
+    </div>
+</main>
+
+
+
+
+<%- include("partials/footer.ejs") %>
