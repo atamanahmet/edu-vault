@@ -7,7 +7,8 @@ const port = 3000;
 let quiz=[];
 var randomCountry;
 
-const db= new pg.Client({
+
+const db = new pg.Client({
     user: "postgres",
     host: "localhost",
     database: "world",
@@ -17,35 +18,22 @@ const db= new pg.Client({
 
 db.connect();
 
-db.query("select * from capitals", async (err,res) => {
-    try{
-        if (err) {
-            console.error("Error executing query", err.stack);
-        }
-        else {
-          quiz = await res.rows;
-        }
+db.query("SELECT * FROM capitals", (err, res) => {
+    if (err) throw console.error("Error query", err.stack);
+    else {
+        quiz = res.rows;
     }
-    catch (err){
-        console.log(err.message);
-    }
-   
 })
-db.end();
 
-// async function randomGenerate(){
-//     randomCountry = await quiz[Math.floor((Math.random()*quiz.length)+1)]
-//     return randomCountry;
-// }
-// console.log(randomCountry);
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 let score = 0;
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
     try{
-        quiz = await quiz[Math.floor((Math.random()*quiz.length)+1)]
+        randomCountry = quiz[Math.floor((Math.random()*quiz.length)+1)]
         
         randomCountry["count"]=score;
         res.render("index.ejs", {content: randomCountry})
