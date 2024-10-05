@@ -6,11 +6,19 @@
         <hr>
           <%  content.forEach((item)=>{%> 
             <div class="post">
-                <h2> <%=item.title%></h2>
-                <p><%=item.date%></p>
+                <h2> 
+                    <%=item.title%>
+                </h2>
+                <p>
+                    <%=item.date%>
+                </p>
                 <br>
-                <p><%=item.content%></p>
-                <p>By: <%=item.author%></p>
+                <p>
+                    <%=item.content%>
+                </p>
+                <p>By: 
+                    <%=item.author%>
+                </p>
                 <br>
                 <a class="edit" href="/edit/<%=item.id %>">Edit</a>
                 <a class="delete" href="/posts/delete/<%=item.id %>">Delete</a>
@@ -24,8 +32,5 @@
         
     </div>
 </main>
-
-
-
 
 <%- include("partials/footer.ejs") %>
