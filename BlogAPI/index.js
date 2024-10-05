@@ -31,10 +31,8 @@ let posts = [
     },
   ];
 app.use(express.static("public"))
-//   fs.writeFileSync("api.json", JSON.stringify(posts));
 
 const api = JSON.parse(fs.readFileSync("api.json","utf-8"));
-// console.log(api);
 
 app.use(express.urlencoded({extended: true}));
 
@@ -54,9 +52,6 @@ app.get("/edit/:id", (req,res) => {
     }
    })
 })
-// app.patch("/patch", (req,res) => {
-    
-// })
 
 app.listen(port, (req,res) => {
     console.log("Server Online on port : "+port);
