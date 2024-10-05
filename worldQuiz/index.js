@@ -7,6 +7,8 @@ const port = 3000;
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+let score = 0;
+
 app.get('/', (req, res) => {
     const data=0;
 res.render("index.ejs", {content: data})

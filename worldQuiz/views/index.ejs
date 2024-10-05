@@ -8,11 +8,11 @@
     <title>World Quiz</title>
 </head>
 <body>
-    <div class="container d-flex flex-column align-items-center justify-content-around p-4">
+    <div class="container  d-flex flex-column align-items-center justify-content-around p-4">
         <p class="align-self-start">Total Score : <%=content.counter%></p>
        <h2><%=content.country %> Country</h2>
        <form action="/submit" method="post"></form>
-       <input type="text" name="guess" class="p-2 rounded " placeholder="Enter the capital">
+       <input type="text" name="guess" class="p-2 rounded text-center" placeholder="Enter the capital">
        <button class="roudned border-0 submit">SUBMIT</button>
     </div>
 </body>
