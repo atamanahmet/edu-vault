@@ -1,9 +1,10 @@
 <%- include("partials/header.ejs") %>
-<h2  class="rounded border-0 submit2 align-self-center p-5 m-5">Your score is : <%= content.score %></h2>
+<div class="container d-flex flex-column align-items-center justify-content-center">
+<h2>Your score is : <span style="background-color: rgb(255, 208, 0); padding: 1rem; border-radius: 30px; color: red;"><%= content %></span></h2>
 <a href="/" class="d-flex ">
-    <button type="submit" class="rounded border-0 submit2 align-self-center p-5 m-5">RESTART</button>
+    <button type="submit" class=" border-0 submit2 align-self-center p-5 m-5">RESTART</button>
 </a>
-
+</div>
 
 </body>
 </html>

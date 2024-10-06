@@ -41,9 +41,10 @@ button{
     font-family: arial;
     font-size: 3rem;
     font-weight: 700;
-    background-color: black;
+    background-color: rgb(255, 208, 0);
     color: white;
     padding: 0.5rem;
+    border-radius: 30px;
     
 }
 a{

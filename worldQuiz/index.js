@@ -49,7 +49,6 @@ app.post("/submit", (req, res) => {
     console.log("Game Over");
     randomCountry["win"] = false;
     res.render("gameOver.ejs", {content: score})
-    console.log(score);
     score = 0;
   }
 });
