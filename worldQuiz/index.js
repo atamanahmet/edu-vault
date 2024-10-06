@@ -22,6 +22,7 @@ db.query("SELECT * FROM capitals", (err, res) => {
   else {
     quiz = res.rows;
   }
+  db.end();
 });
 
 app.use(express.urlencoded({ extended: true }));
