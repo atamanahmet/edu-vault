@@ -2,7 +2,7 @@ body{
     background-image: url("/img/bg.jpg");
     display: flex;
     flex-flow: column ;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
 }
 .container{
@@ -28,3 +28,22 @@ p{
     width: 80%;
 /* border: none; */
 }
+.form{
+    display: flex;
+    flex-flow: column ;
+    align-items: center;
+    justify-content: center;
+}
+button{
+    margin-bottom: 6rem;
+}
+.submit2, .submit2:hover, .submit2:focus{
+    font-family: arial;
+    font-size: 3rem;
+    font-weight: 700;
+    background-color: black;
+    color: white;
+    padding: 0.5rem;
+    text-decoration: none;
+}
+
