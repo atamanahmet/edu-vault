@@ -48,8 +48,9 @@ app.post("/submit", (req, res) => {
   } else {
     console.log("Game Over");
     randomCountry["win"] = false;
+    res.render("gameOver.ejs", {content: score})
+    console.log(score);
     score = 0;
-    res.render("gameOver.ejs")
   }
 });
 app.listen(port, (req, res) => {

@@ -44,6 +44,9 @@ button{
     background-color: black;
     color: white;
     padding: 0.5rem;
+    
+}
+a{
     text-decoration: none;
 }
 
