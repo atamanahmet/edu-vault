@@ -3,11 +3,9 @@ import pg from "pg";
 
 const app = express();
 const port = 3000;
-let visited = [];
-let allCountries = [];
+let allCountries=[];
 let data = [];
 let error;
-let done = false;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -36,32 +34,26 @@ async function checkVisited() {
     result.rows.forEach((country) => {
       data.push(country.country_code);
     });
-
-    // return data;
   } catch (err) {
     console.log(err.message);
   }
 }
 
-// db.query("Select country_code from visited", async (err, res) => {
-//   if (err) throw err.stack;
-//   await res.rows.forEach((country) => {
-//     data.push(country.country_code);
-//   });
-// });
+db.query("Select country_code from visited", async (err, res) => {
+  if (err) throw err.stack;
+  await res.rows.forEach((country) => {
+    data.push(country.country_code);
+  });
+});
 
 app.get("/", async (req, res) => {
-  //Write your code here.
-  done = false;
   await checkVisited();
-  res.render("index.ejs", { data: data, error: error });
+  res.render("index.ejs", { data: data, error: error});
 });
 
 app.post("/add", async (req, res) => {
+  error=null;
   const input = req.body.country;
-  done = false;
-  // checkVisited();
-  let counter = 0;
   try {
     const result = await db.query(
       "select country_code from countries where lower(country_name) like '%'||$1||'%'",
@@ -79,6 +71,9 @@ app.post("/add", async (req, res) => {
       await checkVisited();
       res.render("index.ejs", {data: data, error: error})
     }
+// test
+    // console.log(result.rows.length);
+    // result.rows.length>1 ? 
     // allCountries.forEach((item) => {
     //   counter++;
     //   if (item.country_name.toLowerCase().startsWith(input.toLowerCase())) {
@@ -101,13 +96,10 @@ app.post("/add", async (req, res) => {
     //   }
     // });
 
-    if (done == false) {
-      error = "Country name does not exist, try again.";
-      console.log(error);
-      res.render("index.ejs", { data: data, error: error });
-    }
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
+    error = "Country name cannot found. Try again."
+    res.redirect("/")
   }
 });
 
