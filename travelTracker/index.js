@@ -68,6 +68,17 @@ app.post("/add", async (req, res) => {
       [input.toLowerCase()]
     );
     console.log(result.rows);
+    const newCountryCode = result.rows[0].country_code;
+    console.log(newCountryCode);
+    try {
+      await db.query("insert into visited (country_code) values ($1)", [newCountryCode])
+      console.log("DB Write Succesful");
+    } catch (err) {
+      console.log(err.message);
+      error="Country allready exist. Enter a new country.";
+      await checkVisited();
+      res.render("index.ejs", {data: data, error: error})
+    }
     // allCountries.forEach((item) => {
     //   counter++;
     //   if (item.country_name.toLowerCase().startsWith(input.toLowerCase())) {
