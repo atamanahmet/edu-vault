@@ -3,9 +3,10 @@ import pg from "pg";
 
 const app = express();
 const port = 3000;
-let allCountries=[];
+let allCountries = [];
 let data = [];
 let error;
+let newCountryCode;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -48,11 +49,11 @@ db.query("Select country_code from visited", async (err, res) => {
 
 app.get("/", async (req, res) => {
   await checkVisited();
-  res.render("index.ejs", { data: data, error: error});
+  res.render("index.ejs", { data: data, error: error });
 });
 
 app.post("/add", async (req, res) => {
-  error=null;
+  error = null;
   const input = req.body.country;
   try {
     const result = await db.query(
@@ -60,20 +61,28 @@ app.post("/add", async (req, res) => {
       [input.toLowerCase()]
     );
     console.log(result.rows);
-    const newCountryCode = result.rows[0].country_code;
+    if (result.rows.length > 1) {
+      newCountryCode = result.rows[1].country_code;
+    } else {
+      newCountryCode = result.rows[0].country_code;
+    }
+
     console.log(newCountryCode);
     try {
-      await db.query("insert into visited (country_code) values ($1)", [newCountryCode])
+      await db.query("insert into visited (country_code) values ($1)", [
+        newCountryCode,
+      ]);
       console.log("DB Write Succesful");
+      res.redirect("/");
     } catch (err) {
       console.log(err.message);
-      error="Country allready exist. Enter a new country.";
+      error = "Country allready exist. Enter a new country.";
       await checkVisited();
-      res.render("index.ejs", {data: data, error: error})
+      res.render("index.ejs", { data: data, error: error });
     }
-// test
+    // test
     // console.log(result.rows.length);
-    // result.rows.length>1 ? 
+    // result.rows.length>1 ?
     // allCountries.forEach((item) => {
     //   counter++;
     //   if (item.country_name.toLowerCase().startsWith(input.toLowerCase())) {
@@ -95,11 +104,10 @@ app.post("/add", async (req, res) => {
     //     }
     //   }
     // });
-
   } catch (err) {
     console.log(err.message);
-    error = "Country name cannot found. Try again."
-    res.redirect("/")
+    error = "Country name cannot found. Try again.";
+    res.redirect("/");
   }
 });
 
