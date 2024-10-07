@@ -33,8 +33,9 @@ let score = 0;
 app.get("/", (req, res) => {
   try {
     randomCapitalGET(res);
-    randomCountry["win"] = true;
-  } catch (err) {
+  } 
+  
+  catch (err) {
     console.log(err.message);
   }
 });
@@ -48,7 +49,6 @@ app.post("/submit", (req, res) => {
     res.redirect("/");
   } else {
     console.log("Game Over");
-    randomCountry["win"] = false;
     res.render("gameOver.ejs", {content: score})
     score = 0;
   }
