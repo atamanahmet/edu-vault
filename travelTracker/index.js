@@ -30,9 +30,9 @@ db.query("Select * from countries", async (err, res) => {
 });
 
 async function checkVisited() {
+  data = [];
   try {
     const result = await db.query("SELECT country_code FROM visited");
-    data = [];
     result.rows.forEach((country) => {
       data.push(country.country_code);
     });
@@ -43,12 +43,12 @@ async function checkVisited() {
   }
 }
 
-db.query("Select country_code from visited", async (err, res) => {
-  if (err) throw err.stack;
-  await res.rows.forEach((country) => {
-    data.push(country.country_code);
-  });
-});
+// db.query("Select country_code from visited", async (err, res) => {
+//   if (err) throw err.stack;
+//   await res.rows.forEach((country) => {
+//     data.push(country.country_code);
+//   });
+// });
 
 app.get("/", async (req, res) => {
   //Write your code here.
@@ -63,35 +63,37 @@ app.post("/add", async (req, res) => {
   // checkVisited();
   let counter = 0;
   try {
-    allCountries.forEach((item) => {
-      counter++;
-      if (item.country_name.toLowerCase().startsWith(input.toLowerCase())) {
-        
-        const newCountryCode = item.country_code;
-        try {
-          if (data.includes(newCountryCode)) {
-            error = "Country allready exist. Enter a new country.";
-            console.log(error);
-            done = true;
-            res.render("index.ejs", { data: data, error: error });
-          } else {
-            db.query("insert into visited (country_code) values ($1)", [
-              newCountryCode,
-            ]);
-            done = true;
-            console.log("DB write success");
-            error = null;
-            res.redirect("/");
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    });
+    const result = await db.query(
+      "select country_code from countries where lower(country_name) like '%'||$1||'%'",
+      [input.toLowerCase()]
+    );
+    console.log(result.rows);
+    // allCountries.forEach((item) => {
+    //   counter++;
+    //   if (item.country_name.toLowerCase().startsWith(input.toLowerCase())) {
+    //     const newCountryCode = item.country_code;
+
+    //     if (data.includes(newCountryCode)) {
+    //       error = "Country allready exist. Enter a new country.";
+    //       console.log(error);
+    //       done = true;
+    //       res.render("index.ejs", { data: data, error: error });
+    //     } else {
+    //       db.query("insert into visited (country_code) values ($1)", [
+    //         newCountryCode,
+    //       ]);
+    //       done = true;
+    //       console.log("DB write success");
+    //       error = null;
+    //       res.redirect("/");
+    //     }
+    //   }
+    // });
+
     if (done == false) {
       error = "Country name does not exist, try again.";
       console.log(error);
-      res.redirect("/");
+      res.render("index.ejs", { data: data, error: error });
     }
   } catch (err) {
     console.log(err);
