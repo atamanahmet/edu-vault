@@ -7,6 +7,7 @@ let allCountries = [];
 let data = [];
 let error;
 let newCountryCode;
+let userName = "Jack";
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -34,18 +35,23 @@ db.query("Select * from countries", async (err, res) => {
     allCountries = await res.rows;
   }
 });
-db.query("Select username.name, visited_user.visited from username join visited_user on visited_user.userid = username.id where username.name="+userName, async (err, res) => {
-  if (err) throw err.stack;
-  else {
-    const response = await res.rows;
-    console.log(response);
+db.query(
+  `Select username.name, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${userName.toLowerCase()}'`,
+  async (err, res) => {
+    if (err) throw err.stack;
+    else {
+      const response = await res.rows;
+      response.forEach((item) =>{
+        data.push(item.visited);
+      })
+    }
   }
-});
+);
 
-async function checkVisited() {
+async function checkVisited(user) {
   data = [];
   try {
-    const result = await db.query("SELECT country_code FROM visited");
+    const result = await db.query("SELECT visited FROM visited_user join");
     result.rows.forEach((country) => {
       data.push(country.country_code);
     });
