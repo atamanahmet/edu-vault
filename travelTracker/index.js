@@ -40,25 +40,32 @@ db.query(
   async (err, res) => {
     if (err) throw err.stack;
     else {
-      const response = await res.rows;
-      response.forEach((item) =>{
-        data.push(item.visited);
-      })
+      const result = await res.rows;
+      
+      // console.log(result);
+      result.forEach((item) => {
+        data.push(item.visited)
+
+      });
     }
   }
 );
 
-async function checkVisited(user) {
+async function checkVisited() {
   data = [];
   try {
-    const result = await db.query("SELECT visited FROM visited_user join");
-    result.rows.forEach((country) => {
-      data.push(country.country_code);
-    });
+    const result = await db.query(
+      `Select username.name, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${userName.toLowerCase()}'`)
+      result.rows.forEach((item)=>{
+        console.log(item.visited);
+        data.push(item.visited);
+      })
   } catch (err) {
     console.log(err.message);
   }
+  console.log(data);
 }
+
 
 db.query("Select country_code from visited", async (err, res) => {
   if (err) throw err.stack;
