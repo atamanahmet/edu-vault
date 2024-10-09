@@ -8,9 +8,8 @@ let data = [];
 let error;
 let newCountryCode;
 let currentUser = {};
-
 let users = [];
-let color;
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -23,8 +22,8 @@ const db = new pg.Client({
   port: 5432,
 });
 
-db.connect();
-db.query("select name,color from username", async (err, res) => {
+await db.connect();
+await db.query("select name,color from username", async (err, res) => {
   const result = await res.rows;
   if (err) throw err.stack;
   result.forEach((item) => {
@@ -43,34 +42,32 @@ db.query("Select * from countries", async (err, res) => {
 });
 
 async function checkVisited(currentUser) {
-  if (!currentUser.username) {
+  data = [];
+  if (currentUser) {
     try {
-      const result = await db.query(
-        `select visited, username.color from visited_user join username on visited_user.userid = username.id`
+      const userID = await db.query(
+        "select * from username where username.name=($1)",
+        [currentUser.username]
       );
-      // console.log("!user: " + JSON.stringify(result.rows));
+
+      currentUser.id = userID.rows[0].id;
+      // console.log(currentUser);
+
+      const result = await db.query(
+        "select visited from visited_user where userid=($1)",
+        [currentUser.id]
+      );
+
       result.rows.forEach((item) => {
         data.push(item.visited);
       });
+      // console.log(currentUser);
     } catch (err) {
       console.log(err.message);
     }
   } else {
-    try {
-      const result = await db.query(
-        `Select username.id, username.name, username.color, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${currentUser.username.toLowerCase()}'`
-      );
-
-      // console.log(result.rows);
-      // console.log("userFound: " + JSON.stringify(result.rows));
-
-      result.rows.forEach((item) => {
-        data.push(item.visited);
-        currentUser.id = item.id;
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
+    error = "Please select or create a user";
+    res.redirect("/");
   }
 }
 
@@ -82,17 +79,30 @@ db.query("Select country_code from visited", async (err, res) => {
 });
 
 app.get("/", async (req, res) => {
-  await checkVisited();
-  res.render("index.ejs", { data: data, error: error, users: users });
+
+  if (currentUser) {
+    users.forEach((item) => {
+      if (item.name == currentUser.username) {
+        currentUser.color = item.color;
+      }
+    });
+    console.log(currentUser);
+  }
+  else{
+    color="teal";
+  }
+  await checkVisited(currentUser);
+  res.render("index.ejs", { data: data, error: error, users: users});
 });
 
 app.post("/userSelect", async (req, res) => {
   try {
     data = [];
+    currentUser.id = null;
     currentUser.username = req.body.currentUser;
-    // console.log(currentUser);
+   
     await checkVisited(currentUser);
-    res.render("index.ejs", { data: data, error: error, users: users });
+    res.redirect("/");
   } catch (error) {
     console.log(error);
   }
@@ -100,6 +110,8 @@ app.post("/userSelect", async (req, res) => {
 
 app.post("/add", async (req, res) => {
   error = null;
+  currentUser.id = null;
+  checkVisited(currentUser);
   const input = req.body.country;
   console.log(input);
   try {
@@ -114,24 +126,19 @@ app.post("/add", async (req, res) => {
       newCountryCode = result.rows[0].country_code;
     }
 
-    // console.log(newCountryCode);
     try {
+      console.log(newCountryCode);
       await db.query(
-        "insert into visited_user (userid),(country_code) values ($1),($2)",
-        [currentUser.id, newCountryCode]
+        `insert into visited_user (userid, visited) values (${currentUser.id}, '${newCountryCode}')`
       );
       console.log("DB Write Succesful");
+
       res.redirect("/");
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
       error = "Country allready exist. Enter a new country.";
       await checkVisited();
-      res.render("index.ejs", {
-        data: data,
-        error: error,
-        users: users,
-        color: color,
-      });
+      res.redirect("/");
     }
   } catch (err) {
     console.log(err.message);
@@ -143,3 +150,7 @@ app.post("/add", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost: ${port}`);
 });
+
+async function resetBuffer() {
+  currentUser.id = null;
+}
