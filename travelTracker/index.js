@@ -9,7 +9,7 @@ let error;
 let newCountryCode;
 let currentUser = {};
 let users = [];
-
+let color;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -23,7 +23,7 @@ const db = new pg.Client({
 });
 
 await db.connect();
-await db.query("select name,color from username", async (err, res) => {
+await db.query("select id,name,color from username", async (err, res) => {
   const result = await res.rows;
   if (err) throw err.stack;
   result.forEach((item) => {
@@ -51,7 +51,7 @@ async function checkVisited(currentUser) {
       );
 
       currentUser.id = userID.rows[0].id;
-      // console.log(currentUser);
+      console.log(currentUser);
 
       const result = await db.query(
         "select visited from visited_user where userid=($1)",
@@ -61,6 +61,7 @@ async function checkVisited(currentUser) {
       result.rows.forEach((item) => {
         data.push(item.visited);
       });
+      console.log(data);
       // console.log(currentUser);
     } catch (err) {
       console.log(err.message);
@@ -83,16 +84,17 @@ app.get("/", async (req, res) => {
   if (currentUser) {
     users.forEach((item) => {
       if (item.name == currentUser.username) {
+        console.log(item);
         currentUser.color = item.color;
       }
     });
-    console.log(currentUser);
+    console.log(color);
   }
   else{
     color="teal";
   }
   await checkVisited(currentUser);
-  res.render("index.ejs", { data: data, error: error, users: users});
+  res.render("index.ejs", { data: data, error: error, users: users, currentUser: currentUser});
 });
 
 app.post("/userSelect", async (req, res) => {
