@@ -8,11 +8,19 @@
   </head>
 
   <body>
-   
+
     <form action="/userSelect" method="post">
       <%users.forEach((item) => {%>
-        <button type="submit" name="currentUser" value="<%=item.name %>" style="background-color: <%=item.color %>"><%=item.name%></button>
-        <% }) %>
+      <button
+        type="submit"
+        name="currentUser"
+        value="<%=item.name %>"
+        style="background-color: <%=item.color %>"
+      >
+        <%=item.name%>
+      </button>
+      <% }) %>
+      <button type="submit" formaction="/newUser" formmethod="get">+</button>
     </form>
     <form action="/add" method="post">
       <input
@@ -916,17 +924,18 @@
     </section>
     <h2 class="total-count">Total Countries: <%=data.length%></h2>
     <script>
+   
       const visited = "<%=data%>".split(",");
       var asd;
-      asd= "<%=currentUser.color %>"
+      asd = "<%=currentUser.color %>";
       console.log(visited);
-     
-      console.log(`fill = ${asd}`);
+
       visited.forEach((item) => {
         if (document.getElementById(item)) {
           document.getElementById(item).style.fill = asd;
         }
       });
     </script>
+
   </body>
 </html>
