@@ -10,7 +10,7 @@ let newCountryCode;
 let currentUser;
 let users = [];
 let color;
-let colors= {};
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -20,16 +20,20 @@ const db = new pg.Client({
   password: "123456",
   host: "localhost",
   database: "world",
-  port: 5432,
+  port: 5432
 });
 
 db.connect();
-db.query("select name from username", async (err, res) => {
+db.query("select name,color from username", async (err, res) => {
   const result = await res.rows;
   if (err) throw err.stack;
   result.forEach((item) => {
-    // console.log(item);
-    users.push(item.name);
+    users.push({
+      id: item.id,
+      name: item.name,
+      color: item.color
+    });
+    
   });
 });
 db.query("Select * from countries", async (err, res) => {
@@ -39,39 +43,13 @@ db.query("Select * from countries", async (err, res) => {
   }
 });
 
-db.query("Select * from countries", async (err, res) => {
-  if (err) throw err.stack;
-  else {
-    allCountries = await res.rows;
-  }
-});
-db.query("select LOWER(name), color from username", async (err, res) => {
-  const result = await res.rows
-  if (err) throw err.stack;
-  result.forEach(item => {
-    
-    users.forEach((user) => {
-      if(colorBuffer!=result.color){
-        colors[user]=result.color
-      }
-    })
-    
-  });
- 
-
-  
-})
-
-async function checkVisited(user) {
-  if (!user) {
+async function checkVisited(currentUser) {
+  if (!currentUser) {
     try {
       const result = await db.query(`select visited, username.color from visited_user join username on visited_user.userid = username.id`);
       console.log("!user: "+JSON.stringify(result.rows));
       result.rows.forEach((item) => {
         data.push(item.visited);
-      //   if(!colors.includes(item.color)){
-      //   colors.push(item.color);
-      // }
       });
 
     } catch (err) {
@@ -80,18 +58,15 @@ async function checkVisited(user) {
   } else {
     try {
       const result = await db.query(
-        `Select username.name, username.color, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${user.toLowerCase()}'`
+        `Select user.id,username.name, username.color, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${currentUser.toLowerCase()}'`
       );
       
       console.log("userFound: "+JSON.stringify(result.rows));
+      
       result.rows.forEach((item) => {
-        // console.log(item.visited);
+      
         data.push(item.visited);
-        // console.log(item.color);
-        
-        // color = item.color;
-        // console.log(color);
-        // console.log(data);
+        currentUserId=item.id;
       });
     } catch (err) {
       console.log(err.message);
@@ -108,14 +83,14 @@ db.query("Select country_code from visited", async (err, res) => {
 
 app.get("/", async (req, res) => {
   await checkVisited();
-  res.render("index.ejs", { data: data, error: error, users: users, color: color });
+  res.render("index.ejs", { data: data, error: error, users: users});
 });
 
 app.post("/userSelect", async (req, res) => {
   data=[];
   currentUser = req.body.currentUser;
   await checkVisited(currentUser);
-  res.render("index.ejs", { data: data, error: error, users: users });
+  res.render("index.ejs", { data: data, error: error, users: users});
 });
 
 app.post("/add", async (req, res) => {
@@ -135,7 +110,7 @@ app.post("/add", async (req, res) => {
 
     // console.log(newCountryCode);
     try {
-      await db.query("insert into visited (country_code) values ($1)", [
+      await db.query("insert into visited_user (id),(country_code) values ()($2)", [
         newCountryCode,
       ]);
       console.log("DB Write Succesful");
@@ -144,7 +119,7 @@ app.post("/add", async (req, res) => {
       console.log(err.message);
       error = "Country allready exist. Enter a new country.";
       await checkVisited();
-      res.render("index.ejs", { data: data, error: error });
+      res.render("index.ejs", { data: data, error: error, users: users, color: color});
     }
     // test
     // console.log(result.rows.length);
