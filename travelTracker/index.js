@@ -7,10 +7,10 @@ let allCountries = [];
 let data = [];
 let error;
 let newCountryCode;
-let currentUser;
+let currentUser = {};
+
 let users = [];
 let color;
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -20,7 +20,7 @@ const db = new pg.Client({
   password: "123456",
   host: "localhost",
   database: "world",
-  port: 5432
+  port: 5432,
 });
 
 db.connect();
@@ -31,9 +31,8 @@ db.query("select name,color from username", async (err, res) => {
     users.push({
       id: item.id,
       name: item.name,
-      color: item.color
+      color: item.color,
     });
-    
   });
 });
 db.query("Select * from countries", async (err, res) => {
@@ -46,27 +45,27 @@ db.query("Select * from countries", async (err, res) => {
 async function checkVisited(currentUser) {
   if (!currentUser) {
     try {
-      const result = await db.query(`select visited, username.color from visited_user join username on visited_user.userid = username.id`);
-      console.log("!user: "+JSON.stringify(result.rows));
+      const result = await db.query(
+        `select visited, username.color from visited_user join username on visited_user.userid = username.id`
+      );
+      // console.log("!user: " + JSON.stringify(result.rows));
       result.rows.forEach((item) => {
         data.push(item.visited);
       });
-
     } catch (err) {
       console.log(err.message);
     }
   } else {
     try {
       const result = await db.query(
-        `Select user.id,username.name, username.color, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${currentUser.toLowerCase()}'`
+        `Select username.id, username.name, username.color, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${currentUser.username.toLowerCase()}'`
       );
-      
-      console.log("userFound: "+JSON.stringify(result.rows));
-      
+
+      console.log("userFound: " + JSON.stringify(result.rows));
+
       result.rows.forEach((item) => {
-      
         data.push(item.visited);
-        currentUserId=item.id;
+        currentUser.id = item.id;
       });
     } catch (err) {
       console.log(err.message);
@@ -83,14 +82,19 @@ db.query("Select country_code from visited", async (err, res) => {
 
 app.get("/", async (req, res) => {
   await checkVisited();
-  res.render("index.ejs", { data: data, error: error, users: users});
+  res.render("index.ejs", { data: data, error: error, users: users });
 });
 
 app.post("/userSelect", async (req, res) => {
-  data=[];
-  currentUser = req.body.currentUser;
-  await checkVisited(currentUser);
-  res.render("index.ejs", { data: data, error: error, users: users});
+  try {
+    data = [];
+  currentUser.username = req.body.currentUser;
+  await checkVisited(currentUser.username);
+  res.render("index.ejs", { data: data, error: error, users: users });
+  } catch (error) {
+    console.log(error);
+  }
+  
 });
 
 app.post("/add", async (req, res) => {
@@ -110,41 +114,23 @@ app.post("/add", async (req, res) => {
 
     // console.log(newCountryCode);
     try {
-      await db.query("insert into visited_user (id),(country_code) values ()($2)", [
-        newCountryCode,
-      ]);
+      await db.query(
+        "insert into visited_user (userid),(country_code) values ($1)($2)",
+        [currentUser.id, newCountryCode]
+      );
       console.log("DB Write Succesful");
       res.redirect("/");
     } catch (err) {
       console.log(err.message);
       error = "Country allready exist. Enter a new country.";
       await checkVisited();
-      res.render("index.ejs", { data: data, error: error, users: users, color: color});
+      res.render("index.ejs", {
+        data: data,
+        error: error,
+        users: users,
+        color: color,
+      });
     }
-    // test
-    // console.log(result.rows.length);
-    // result.rows.length>1 ?
-    // allCountries.forEach((item) => {
-    //   counter++;
-    //   if (item.country_name.toLowerCase().startsWith(input.toLowerCase())) {
-    //     const newCountryCode = item.country_code;
-
-    //     if (data.includes(newCountryCode)) {
-    //       error = "Country allready exist. Enter a new country.";
-    //       console.log(error);
-    //       done = true;
-    //       res.render("index.ejs", { data: data, error: error });
-    //     } else {
-    //       db.query("insert into visited (country_code) values ($1)", [
-    //         newCountryCode,
-    //       ]);
-    //       done = true;
-    //       console.log("DB write success");
-    //       error = null;
-    //       res.redirect("/");
-    //     }
-    //   }
-    // });
   } catch (err) {
     console.log(err.message);
     error = "Country name cannot found. Try again.";
