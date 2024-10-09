@@ -43,7 +43,7 @@ db.query("Select * from countries", async (err, res) => {
 });
 
 async function checkVisited(currentUser) {
-  if (!currentUser) {
+  if (!currentUser.username) {
     try {
       const result = await db.query(
         `select visited, username.color from visited_user join username on visited_user.userid = username.id`
@@ -61,7 +61,8 @@ async function checkVisited(currentUser) {
         `Select username.id, username.name, username.color, visited_user.visited from username join visited_user on visited_user.userid = username.id where LOWER(username.name)='${currentUser.username.toLowerCase()}'`
       );
 
-      console.log("userFound: " + JSON.stringify(result.rows));
+      // console.log(result.rows);
+      // console.log("userFound: " + JSON.stringify(result.rows));
 
       result.rows.forEach((item) => {
         data.push(item.visited);
@@ -88,18 +89,19 @@ app.get("/", async (req, res) => {
 app.post("/userSelect", async (req, res) => {
   try {
     data = [];
-  currentUser.username = req.body.currentUser;
-  await checkVisited(currentUser.username);
-  res.render("index.ejs", { data: data, error: error, users: users });
+    currentUser.username = req.body.currentUser;
+    // console.log(currentUser);
+    await checkVisited(currentUser);
+    res.render("index.ejs", { data: data, error: error, users: users });
   } catch (error) {
     console.log(error);
   }
-  
 });
 
 app.post("/add", async (req, res) => {
   error = null;
-  const input = req.body;
+  const input = req.body.country;
+  console.log(input);
   try {
     const result = await db.query(
       "select country_code from countries where lower(country_name) like '%'||$1||'%'",
@@ -115,7 +117,7 @@ app.post("/add", async (req, res) => {
     // console.log(newCountryCode);
     try {
       await db.query(
-        "insert into visited_user (userid),(country_code) values ($1)($2)",
+        "insert into visited_user (userid),(country_code) values ($1),($2)",
         [currentUser.id, newCountryCode]
       );
       console.log("DB Write Succesful");
