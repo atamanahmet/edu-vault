@@ -9,7 +9,7 @@ let error;
 let newCountryCode;
 let currentUser = {};
 let users = [];
-let color;
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -22,9 +22,10 @@ const db = new pg.Client({
   port: 5432,
 });
 
-await db.connect();
-await db.query("select id,name,color from username", async (err, res) => {
-  const result = await res.rows;
+db.connect();
+
+db.query("select id,name,color from username", async (err, res) => {
+  const result = res.rows;
   if (err) throw err.stack;
   result.forEach((item) => {
     users.push({
@@ -34,6 +35,8 @@ await db.query("select id,name,color from username", async (err, res) => {
     });
   });
 });
+
+
 db.query("Select * from countries", async (err, res) => {
   if (err) throw err.stack;
   else {
@@ -42,6 +45,7 @@ db.query("Select * from countries", async (err, res) => {
 });
 
 async function checkVisited(currentUser) {
+  
   data = [];
   if (currentUser) {
     try {
@@ -51,7 +55,7 @@ async function checkVisited(currentUser) {
       );
 
       currentUser.id = userID.rows[0].id;
-      console.log(currentUser);
+      // console.log(currentUser);
 
       const result = await db.query(
         "select visited from visited_user where userid=($1)",
@@ -61,8 +65,8 @@ async function checkVisited(currentUser) {
       result.rows.forEach((item) => {
         data.push(item.visited);
       });
-      console.log(data);
-      // console.log(currentUser);
+      // console.log(data);
+
     } catch (err) {
       console.log(err.message);
     }
@@ -80,20 +84,22 @@ db.query("Select country_code from visited", async (err, res) => {
 });
 
 app.get("/", async (req, res) => {
-
+  await getDB();
   if (currentUser) {
+    await checkVisited(currentUser);
     users.forEach((item) => {
       if (item.name == currentUser.username) {
-        console.log(item);
+        // console.log(item);
         currentUser.color = item.color;
       }
     });
-    console.log(color);
+  
   }
   else{
-    color="teal";
+    await checkVisited();
+    currentUser.color = "teal";
   }
-  await checkVisited(currentUser);
+ 
   res.render("index.ejs", { data: data, error: error, users: users, currentUser: currentUser});
 });
 
@@ -121,7 +127,7 @@ app.post("/add", async (req, res) => {
       "select country_code from countries where lower(country_name) like '%'||$1||'%'",
       [input.toLowerCase()]
     );
-    // console.log(result.rows);
+
     if (result.rows.length > 1) {
       newCountryCode = result.rows[1].country_code;
     } else {
@@ -149,10 +155,41 @@ app.post("/add", async (req, res) => {
   }
 });
 
+
+app.get("/newUser", (req,res) => {
+  res.render("newUser.ejs") 
+})
+
+app.post("/userInfo", async (req,res) => {
+  
+  const newUser={name: req.body.name,
+    color: req.body.color
+  }
+  try {
+    await db.query(`insert into username (name, color) values ($1,$2)`, [newUser.name, newUser.color])
+    getDB();
+  } catch (err) {
+    console.log(err);
+  }
+  res.redirect("/");
+})
 app.listen(port, () => {
   console.log(`Server running on http://localhost: ${port}`);
 });
 
-async function resetBuffer() {
-  currentUser.id = null;
+async function getDB() {
+  
+  await db.query("select id,name,color from username", async (err, res) => {
+    const result = res.rows;
+    if (err) throw err.stack;
+    users=[];
+    result.forEach((item) => {
+      users.push({
+        id: item.id,
+        name: item.name,
+        color: item.color,
+      });
+    });
+  });
+  return users
 }
