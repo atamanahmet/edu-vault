@@ -85,6 +85,7 @@ db.query("Select country_code from visited", async (err, res) => {
 
 app.get("/", async (req, res) => {
   await getDB();
+  console.log(currentUser);
   if (currentUser) {
     await checkVisited(currentUser);
     users.forEach((item) => {
@@ -165,6 +166,7 @@ app.post("/userInfo", async (req,res) => {
   const newUser={name: req.body.name,
     color: req.body.color
   }
+  currentUser.username = req.body.name;
   try {
     await db.query(`insert into username (name, color) values ($1,$2)`, [newUser.name, newUser.color])
     getDB();
