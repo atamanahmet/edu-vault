@@ -1,17 +1,41 @@
 <%- include("partials/header.ejs") %>
 <div class="container">
   <h1>To-Don't List</h1>
-  <fieldset>
-    <% console.log(error); if(locals.data){ data.forEach((item)=>{%>
-    <input type="text" value="<%=item.todo_item %>" />
-    <% }) }else{%>
-      <form action="/userSelect" method="post">
-        <%users.forEach((item) => {%>
-           <button type="submit"><%=item.name %></button>
-           <% }) %>
-     
+  <fieldset
+    style="display: flex; flex-flow: column nowrap; justify-content: center"
+  >
+    <%if(locals.data){%>
+    <form action="/update" method="post">
+      <% data.forEach((item)=>{%>
+      <input type="hidden" value="<%=item.todo_item%>" id="<%=item.todoid%>" />
+      <div style="display: inline">
+        <p class="<%=item.todoid%>"><%=item.todo_item%></p>
+        <img src="/img/quill-drawing-a-line.png" id="<%=item.todoid%>" alt="" width="25" onclick="funci(this)"/>
+      </div>
+      <% }) %>
+      <button type="submit">Save</button>
     </form>
-      <% }%>
+    <%}else{%>
+    <form action="/userSelect" method="post">
+      <%users.forEach((item) => {%>
+      <button type="submit" name="id" value="<%=item.id%>">
+        <%=item.name %>
+      </button>
+      <% }) %>
+    </form>
+    <% }%>
   </fieldset>
 </div>
+<script>
+  function funci(element) {
+    console.log(element.id);
+    console.log(document.getElementsByClassName(String(element.id)));
+    // document.getElementsByClassName(element.id).style= "display: none";
+    // element.style.display = "none";
+    // console.log(element);
+    // console.log(element.id);
+    document.getElementById(element.id).setAttribute("type", "text");
+  }
+</script>
+
 <%- include("partials/footer.ejs") %>

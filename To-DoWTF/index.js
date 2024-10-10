@@ -6,7 +6,7 @@ const port = 3000;
 const app = express();
 let currentUser;
 let users =[];
-
+let error;
 
 const db = new pg.Client({
     host: "localhost",
@@ -34,29 +34,39 @@ await db.query("select name, id from users", (err,res) => {
 
 app.get("/", async (req,res) => {
     const result = await getDb();
-    let userInfo=[];
+    let data=[];
+    console.log(result.rows);
     if(currentUser){
         result.rows.forEach((item)=>{
-            if (item.name==currentUser){
-                userInfo.push(item);
+            if (item.user_id==currentUser){
+                data.push(item);
             }
         })
-        console.log(userInfo);
-        res.render("index.ejs", {data: userInfo})
+        // console.log(data);
+        res.render("index.ejs", {data: data, error:error})
     }
     else{
-        const error = "No user selected"
+        error = "No user selected"
         res.render("index.ejs", {users: users ,error: error})
     }
    
     
 })
-app.post("/userSelect")
+app.post("/userSelect",(req,res) => {
+    currentUser = Number(req.body.id);
+    // console.log(currentUser);
+    res.redirect("/");
+})
+
+app.post("/update",(req,res) => {
+    console.log(req.body);
+})
+
 app.listen(port, (req,res) => {
     console.log("Server Online on port : "+port);
 })
 
 
 async function getDb() {
- return await db.query("select todo.user_id, users.name, todo.todo_item from todo join users on users.id=todo.user_id ")
+ return await db.query("select todo.user_id, users.name, todo.todo_item, todoid from todo join users on users.id=todo.user_id ")
 }
