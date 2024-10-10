@@ -1,6 +1,17 @@
 <%- include("partials/header.ejs") %>
 <div class="container">
   <h1>To-Don't List</h1>
-  <fieldset>for every db do checkmark write do editicon</fieldset>
+  <fieldset>
+    <% console.log(error); if(locals.data){ data.forEach((item)=>{%>
+    <input type="text" value="<%=item.todo_item %>" />
+    <% }) }else{%>
+      <form action="/userSelect" method="post">
+        <%users.forEach((item) => {%>
+           <button type="submit"><%=item.name %></button>
+           <% }) %>
+     
+    </form>
+      <% }%>
+  </fieldset>
 </div>
 <%- include("partials/footer.ejs") %>

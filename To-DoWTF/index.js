@@ -4,7 +4,10 @@ import pg from "pg";
 
 const port = 3000;
 const app = express();
-let dbResponse;
+let currentUser;
+let users =[];
+
+
 const db = new pg.Client({
     host: "localhost",
     user: "postgres",
@@ -18,14 +21,37 @@ app.use(express.urlencoded({extended: true}));
 
 db.connect();
 
-
+await db.query("select name, id from users", (err,res) => {
+    if(err) throw err.stack;
+    
+    res.rows.forEach((item)=>{
+        users.push({
+            id: item.id,
+            name: item.name,
+        });  
+})
+})
 
 app.get("/", async (req,res) => {
     const result = await getDb();
-    console.log(result.rows);
-    // console.log(result.rows);
-    res.render("index.ejs")
+    let userInfo=[];
+    if(currentUser){
+        result.rows.forEach((item)=>{
+            if (item.name==currentUser){
+                userInfo.push(item);
+            }
+        })
+        console.log(userInfo);
+        res.render("index.ejs", {data: userInfo})
+    }
+    else{
+        const error = "No user selected"
+        res.render("index.ejs", {users: users ,error: error})
+    }
+   
+    
 })
+app.post("/userSelect")
 app.listen(port, (req,res) => {
     console.log("Server Online on port : "+port);
 })
