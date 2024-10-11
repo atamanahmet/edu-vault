@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended: true}));
 
 db.connect();
 
-await db.query("select name, id from users", (err,res) => {
+db.query("select name, id from users", (err,res) => {
     if(err) throw err.stack;
     
     res.rows.forEach((item)=>{
@@ -35,7 +35,7 @@ await db.query("select name, id from users", (err,res) => {
 app.get("/", async (req,res) => {
     const result = await getDb();
     let data=[];
-    console.log(result.rows);
+    // console.log(result.rows);
     if(currentUser){
         result.rows.forEach((item)=>{
             if (item.user_id==currentUser){
