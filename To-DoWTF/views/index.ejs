@@ -9,7 +9,7 @@
       <% data.forEach((item)=>{%>
       <input type="hidden" value="<%=item.todo_item%>" id="<%=item.todoid%>" />
       <div style="display: inline">
-        <p class="<%=item.todoid%>"><%=item.todo_item%></p>
+        <p class="<%=item.todoid%> pp"><%=item.todo_item%></p>
         <img src="/img/quill-drawing-a-line.png" id="<%=item.todoid%>" alt="" width="25" onclick="funci(this)"/>
       </div>
       <% }) %>
@@ -28,8 +28,8 @@
 </div>
 <script>
   function funci(element) {
-    console.log(element.id);
-    console.log(document.getElementsByClassName(String(element.id)));
+    // console.log(element);
+    document.getElementsByClassName(element.id)[0].style.display = "none";
     // document.getElementsByClassName(element.id).style= "display: none";
     // element.style.display = "none";
     // console.log(element);
