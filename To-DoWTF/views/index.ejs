@@ -1,20 +1,27 @@
 <%- include("partials/header.ejs") %>
-<div class="container">
+<div class="container" style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center;">
   <h1>To-Don't List</h1>
   <fieldset
-    style="display: flex; flex-flow: column nowrap; justify-content: center"
+    style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center; width: 400px;"
   >
     <%if(locals.data){%>
     <form action="/update" method="post">
       <% data.forEach((item)=>{%>
-      <input type="hidden" value="<%=item.todo_item%>" id="<%=item.todoid%>" />
-      <div style="display: inline">
-        <p class="<%=item.todoid%> pp"><%=item.todo_item%></p>
-        <img src="/img/quill-drawing-a-line.png" id="<%=item.todoid%>" alt="" width="25" onclick="funci(this)"/>
+      <div style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;" id="div<%=item.id%>">
+       
       </div>
       <% }) %>
-      <button type="submit">Save</button>
+      
     </form>
+    <form action="/new" method="post" "style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;">
+
+      <input type="hidden" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-right:1rem;margin-left: -.2rem;" />
+
+      <img src="/img/quill-drawing-a-line.png" style="font-size: 1em;" id="add" alt="" width="20" height="20" onclick="newItem()"/>
+
+      <button type="submit" id="send" style="display: none; margin-left:2rem;">Save</button>
+    </form>
+
     <%}else{%>
     <form action="/userSelect" method="post">
       <%users.forEach((item) => {%>
@@ -29,13 +36,20 @@
 <script>
   function funci(element) {
     // console.log(element);
-    document.getElementsByClassName(element.id)[0].style.display = "none";
-    // document.getElementsByClassName(element.id).style= "display: none";
-    // element.style.display = "none";
-    // console.log(element);
-    // console.log(element.id);
-    document.getElementById(element.id).setAttribute("type", "text");
+    
+    document.getElementById("c"+element.className).setAttribute("type", "hidden");
+    document.getElementById("img"+element.className).style.display= "none";
+    document.getElementById("p"+element.className).style.display= "none";
+    document.getElementById("input"+element.className).setAttribute("type", "text");
+    document.getElementById("save").style.display ="";
+  
   }
+ function removeEntry(v){
+    v.type ="hidden"
+ }
+
+
 </script>
 
 <%- include("partials/footer.ejs") %>
+
