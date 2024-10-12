@@ -1,0 +1,5 @@
+<input type="checkbox" id="c<%=item.id%>" onclick="removeEntry(this)">
+<input type="hidden" id="input<%=item.id%>" name="input" value="<%=item.todoitem%>" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-left: -.2rem;"/>
+<p id="p<%=item.id%>"  style="margin-left:0rem;"><%=item.todoitem%></p>
+<img src="/img/quill-drawing-a-line.png" class="<%=item.id%>" id="img<%=item.id%>" alt="" width="20" height="20" onclick="funci(this)" style="display: inherit;" />
+<button type="submit" id="save" style="display: none;">Save</button>
