@@ -59,26 +59,21 @@ app.post("/userSelect", async (req, res) => {
 });
 
 app.post("/update", async (req, res) => {
-    let userInputs=[];
-console.log(req.body);
+   console.log(req.body);
+// console.log(req.body);
     const userDbCall= await userDb();
-    const ids = Object.keys(req.body);
+    
     const todoItems = req.body.input[0];
     console.log(todoItems);
 
-   for (let i = 0; i < ids.length; i++) {
-    userInputs.push({
-        id: Number(ids[i]),
-        todoitem: todoItems 
-    })
-   }
    userDbCall.rows.forEach(dbItem => {
     console.log(dbItem);
     userInputs.forEach(async update => {
+      console.log(update);
         if(update.id==dbItem.id){
           console.log(update);
             if(dbItem.todoitem!=update.todoitem){
-               await db.query("update todo set todoitem=($1) where user_id=($2)",[update.todoitem, currentUser])
+               await db.query("update todo set todoitem=$1 where id=$2",[todoItems, currentUser])
             }
         }
     });
