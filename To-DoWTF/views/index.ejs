@@ -1,95 +1,212 @@
 <%- include("partials/header.ejs") %>
-<div class="container" style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center;">
+<div
+  class="container"
+  style="
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  "
+>
   <h1>To-Don't List</h1>
   <div>
     <%if(locals.data){%>
     <form action="/reset" method="get" id="goBack">
-    <img src="/img/left-arrow.png" style="margin:auto; padding-bottom: .19rem; margin-left: 1.4rem;" cursor: pointer;" onclick="userSelect()" width="25">
-    <button type="submit" id="goBack" style="display:none;"></button>
-  </form>
-  <% } %>
-  <fieldset
-    style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center; width: 400px; border-radius: 25px;"
-  >
-    <%if(locals.data){%>
-   
-      <% data.forEach((item)=>{%>
-        <form action="/update" method="post" id="update">
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 8fr; min-width: 400px; " id="div<%=item.id%>">
-       
-      <input type="checkbox" name="checkbox" id="<%=item.id%>" style="width: 15px; height: 15px; margin: auto;" onclick="removeItem(this)">
-   
-      <img src="/img/edit.png" class="<%=item.id%>" alt="" width="15" height="15" style="margin:auto; padding-bottom: .19rem;" cursor: pointer;" onclick="edit(this)">
+      <img src="/img/left-arrow.png" style="margin:auto; padding-bottom: .19rem;
+      margin-left: 1.4rem;" cursor: pointer;" onclick="userSelect()" width="25">
       
-      
-      <div></div>
-      <p><%=item.todoitem%></p>
-      
-      </div>
-      <div style="display: none; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;" id="edit<%=item.id%>">
-        <input type="text" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-left: -.2rem; display: inherit;" name="<%=item.id%>" value="<%=item.todoitem%>" required>
-        <button type="submit" id="save" style="background-color: rgb(113, 186, 255); color: black;border:none;border-radius:10px;padding: .6rem;">Save</button>
-      </div>
     </form>
+    <% } %>
+    <fieldset
+      style="
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        width: 400px;
+        border-radius: 25px;
+      "
+    >
+      <%if(locals.data){%> <% data.forEach((item)=>{%>
+      <form action="/update" method="post" id="update">
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 8fr;
+            min-width: 400px;
+          "
+          id="div<%=item.id%>"
+        >
+          <input
+            type="checkbox"
+            name="checkbox"
+            id="<%=item.id%>"
+            style="width: 15px; height: 15px; margin: auto"
+            onclick="removeItem(this)"
+          />
+
+          <img src="/img/edit.png" class="<%=item.id%>" alt="" width="15"
+          height="15" style="margin:auto; padding-bottom: .19rem;" cursor:
+          pointer;" onclick="edit(this)">
+
+          <div></div>
+          <p><%=item.todoitem%></p>
+        </div>
+        <div
+          style="
+            display: none;
+            flex-flow: row nowrap;
+            gap: 1rem;
+            height: 40px;
+            align-items: center;
+          "
+          id="edit<%=item.id%>"
+        >
+          <input
+            type="text"
+            style="
+              padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+              margin-left: -0.2rem;
+              display: inherit;
+            "
+            name="<%=item.id%>"
+            value="<%=item.todoitem%>"
+            required
+          />
+          <button
+            type="submit"
+            id="save"
+            style="
+              background-color: rgb(113, 186, 255);
+              color: black;
+              border: none;
+              border-radius: 10px;
+              padding: 0.6rem;
+            "
+          >
+            Save
+          </button>
+        </div>
+      </form>
       <% }) %>
-      
-  
 
-    <form action="/new" method="post" style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center; margin-top:1rem;">
-      <img src="/img/add-button.png" style="font-size: 1em;cursor: pointer;margin-bottom: 2rem;" id="add" alt="" width="20" height="20" onclick="newItem(this)"/>
+      <form
+        action="/new"
+        method="post"
+        style="
+          display: flex;
+          flex-flow: row nowrap;
+          gap: 1rem;
+          height: 40px;
+          align-items: center;
+          margin-top: 1rem;
+        "
+      >
+        <img
+          src="/img/add-button.png"
+          style="font-size: 1em; cursor: pointer; margin-bottom: 2rem"
+          id="add"
+          alt=""
+          width="20"
+          height="20"
+          onclick="newItem(this)"
+        />
 
-      <div id="newEntry" style="display: none; grid-template-columns: 1fr 5fr 1fr; gap: 1rem;margin-left:2rem;margin-right:2rem;">
-      <button onclick="back()" style="background-color: rgb(255, 75, 75); color: white; border:none;border-radius:10px;padding: .6rem;">Back</button>
-      <input type="text" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem;  " required />
-      <button type="submit" id="send" style="background-color: rgb(61, 161, 255); color: white; border:none;border-radius:10px;padding: .6rem;">Save</button>
+        <div
+          id="newEntry"
+          style="
+            display: none;
+            grid-template-columns: 1fr 5fr 1fr;
+            gap: 1rem;
+            margin-left: 2rem;
+            margin-right: 2rem;
+          "
+        >
+          <button
+            onclick="back()"
+            style="
+              background-color: rgb(255, 75, 75);
+              color: white;
+              border: none;
+              border-radius: 10px;
+              padding: 0.6rem;
+            "
+          >
+            Back
+          </button>
+          <input
+            type="text"
+            name="newEntry"
+            id="newEntry"
+            style="padding: 0.2rem 0.4rem 0.2rem 0.4rem"
+            required
+          />
+          <button
+            type="submit"
+            id="send"
+            style="
+              background-color: rgb(61, 161, 255);
+              color: white;
+              border: none;
+              border-radius: 10px;
+              padding: 0.6rem;
+            "
+          >
+            Save
+          </button>
+        </div>
+      </form>
 
-    </div>
-    </form>
-
-    <%}else{%>
-    <form action="/userSelect" method="post">
-      <%users.forEach((item) => {%>
-      <button type="submit" name="id" value="<%=item.id%>" style="background-color: rgb(113, 186, 255); color: white;border:none;border-radius:10px;padding: .6rem; width: 5rem;">
-        <%=item.name %>
-      </button>
-      <% }) %>
-    </form>
-    <% }%>
-  </fieldset>
-</div>
+      <%}else{%>
+      <form action="/userSelect" method="post">
+        <%users.forEach((item) => {%>
+        <button
+          type="submit"
+          name="id"
+          value="<%=item.id%>"
+          style="
+            background-color: rgb(113, 186, 255);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem;
+            width: 5rem;
+          "
+        >
+          <%=item.name %>
+        </button>
+        <% }) %>
+      </form>
+      <% }%>
+    </fieldset>
+  </div>
 </div>
 <script>
   function edit(element) {
-  const id = element.className;
-  
-  document.getElementById("div"+id).style.display= "none";
-  document.getElementById("edit"+id).style.display= "flex";
+    const id = element.className;
 
+    document.getElementById("div" + id).style.display = "none";
+    document.getElementById("edit" + id).style.display = "flex";
   }
 
- function removeItem(checkbox){
-  let id = checkbox.id;
-  console.log(id);
-  document.getElementById("div"+id).style.display= "none";
-  document.getElementById("update").submit();
-  id=null;
-  
- }
- function back(){
-document.getElementById("newEntry").style.display="none";
-document.getElementById("add").style.display="";
- }
- function newItem(element){
-  element.style.display="none"
-  document.getElementById("newEntry").style.display ="grid"
- }
- function userSelect() {
-  document.getElementById("goBack").submit();
- }
-
-
+  function removeItem(checkbox) {
+    
+    console.log(checkbox.id);
+    document.getElementById("div" + id).style.display = "none";
+    document.getElementById("update").submit();
+    
+  }
+  function back() {
+    document.getElementById("newEntry").style.display = "none";
+    document.getElementById("add").style.display = "";
+  }
+  function newItem(element) {
+    element.style.display = "none";
+    document.getElementById("newEntry").style.display = "grid";
+  }
+  function userSelect() {
+    document.getElementById("goBack").submit();
+  }
 </script>
 
 <%- include("partials/footer.ejs") %>
-

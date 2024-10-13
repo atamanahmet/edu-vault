@@ -35,7 +35,6 @@ db.query("select name, id from users", (err, res) => {
 
 app.get("/", async (req, res) => {
  
-  const result = await getDb();
   let data = [];
   
   if (currentUser) {
