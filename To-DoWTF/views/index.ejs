@@ -9,7 +9,7 @@
       <% data.forEach((item)=>{%>
         <form action="/update" method="post" id="update">
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 8fr; min-width: 400px;" id="div<%=item.id%>">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 8fr; min-width: 400px; " id="div<%=item.id%>">
        
       <input type="checkbox" name="checkbox" id="<%=item.id%>" style="width: 15px; height: 15px; margin: auto;" onclick="removeItem(this)">
    
@@ -30,11 +30,11 @@
   
 
     <form action="/new" method="post" style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center; margin-top:1rem;">
-      <img src="/img/add-button.png" style="font-size: 1em;cursor: pointer;" id="add" alt="" width="20" height="20" onclick="newItem(this)"/>
+      <img src="/img/add-button.png" style="font-size: 1em;cursor: pointer;margin-bottom: 2rem;" id="add" alt="" width="20" height="20" onclick="newItem(this)"/>
 
       <div id="newEntry" style="display: none;">
-      <input type="text" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-right:1rem; margin-left: -.2rem;" required />
-      <button type="submit" id="send" style="margin-left:2rem;background-color: rgb(113, 186, 255); color: black; border:none;border-radius:10px;padding: .6rem;">Save</button>
+      <input type="text" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem;  margin-left: 4.8rem;" required />
+      <button type="submit" id="send" style="margin-right: -2rem;margin-left: 2rem;background-color: rgb(61, 161, 255); color: white; border:none;border-radius:10px;padding: .6rem;">Save</button>
 
     </div>
     </form>
