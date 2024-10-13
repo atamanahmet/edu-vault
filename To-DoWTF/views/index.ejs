@@ -2,16 +2,19 @@
 <div class="container" style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center;">
   <h1>To-Don't List</h1>
   <fieldset
-    style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center; width: 400px;"
+    style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center; width: 400px; border-radius: 25px;"
   >
     <%if(locals.data){%>
    
       <% data.forEach((item)=>{%>
         <form action="/update" method="post">
-      <div style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;" id="div<%=item.id%>">
-      <input type="checkbox" onclick="">
-      <p style="margin-left:0rem;"><%=item.todoitem%></p>
-      <img src="/img/quill-drawing-a-line.png" class="<%=item.id%>" alt="" width="20" height="20" onclick="edit(this)">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 7fr; min-width: 400px;" id="div<%=item.id%>">
+      <input type="checkbox" onclick="" style="width: 15px; height: 15px; margin: auto;">
+      <img src="/img/edit.png" class="<%=item.id%>" alt="" width="15" height="15" style="margin:auto; cursor: pointer;" onclick="edit(this)">
+      <div></div>
+      <div></div>
+      <p ><%=item.todoitem%></p>
+      
       </div>
       <div style="display: none; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;" id="edit<%=item.id%>">
         <input type="text" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-left: -.2rem; display: inherit;" name="<%=item.id %>" value="<%=item.todoitem%>">
@@ -22,8 +25,8 @@
       
   
 
-    <form action="/new" method="post" "style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;">
-      <img src="/img/quill-drawing-a-line.png" style="font-size: 1em;" id="add" alt="" width="20" height="20" onclick="newItem(this)"/>
+    <form action="/new" method="post" style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center; margin-top:1rem;">
+      <img src="/img/add-button.png" style="font-size: 1em;cursor: pointer;" id="add" alt="" width="20" height="20" onclick="newItem(this)"/>
 
       <div id="newEntry" style="display: none;">
       <input type="text" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-right:1rem;margin-left: -.2rem;" />
