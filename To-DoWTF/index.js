@@ -65,7 +65,7 @@ app.post("/update", async (req, res) => {
   const id = Number(Object.keys(req.body)[0]);
   console.log(id);
   const todoitem = Object.values(req.body)[0];
-
+  
    if(req.body.checkbox){
     console.log("checked");
     await db.query("delete from todo where todo.id=$1",[id])
