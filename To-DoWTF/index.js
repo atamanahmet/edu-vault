@@ -39,12 +39,13 @@ app.get("/", async (req, res) => {
   let data = [];
   // console.log(result.rows);
   if (currentUser) {
-    result.rows.forEach((item) => {
+    const userDbCall = await userDb();  
+    userDbCall.rows.forEach((item) => {
       if (item.user_id == currentUser) {
         data.push(item);
       }
     });
-    // console.log(data);
+
     res.render("index.ejs", { data: data, error: error });
   } else {
     error = "No user selected";
@@ -66,6 +67,7 @@ app.post("/update", async (req, res) => {
   const todoitem = Object.values(req.body)[0];
   await db.query("update todo set todoitem=$1, user_id=$2 where id=$3", [todoitem, currentUser, id])
   const userDbCall = await userDb();
+  console.log(userDbCall.rows);
   res.redirect("/");
 });
 
@@ -89,7 +91,7 @@ async function getDb() {
 }
 async function userDb() {
   return await db.query(
-    "select * from todo where todo.user_id=($1) order by id asc",
+    "select * from todo where todo.user_id=($1) order by todo.id asc",
     [currentUser]
   );
 }
