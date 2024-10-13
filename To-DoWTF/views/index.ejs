@@ -5,21 +5,31 @@
     style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center; width: 400px;"
   >
     <%if(locals.data){%>
-    <form action="/update" method="post">
+   
       <% data.forEach((item)=>{%>
+        <form action="/update" method="post">
       <div style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;" id="div<%=item.id%>">
-       
+      <input type="checkbox" onclick="">
+      <p style="margin-left:0rem;"><%=item.todoitem%></p>
+      <img src="/img/quill-drawing-a-line.png" class="<%=item.id%>" alt="" width="20" height="20" onclick="edit(this)">
       </div>
+      <div style="display: none; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;" id="edit<%=item.id%>">
+        <input type="text" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-left: -.2rem; display: inherit;" name="<%=item.id %>" value="<%=item.todoitem%>">
+        <button type="submit">Save</button>
+      </div>
+    </form>
       <% }) %>
       
-    </form>
+  
+
     <form action="/new" method="post" "style="display: flex; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;">
+      <img src="/img/quill-drawing-a-line.png" style="font-size: 1em;" id="add" alt="" width="20" height="20" onclick="newItem(this)"/>
 
-      <input type="hidden" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-right:1rem;margin-left: -.2rem;" />
+      <div id="newEntry" style="display: none;">
+      <input type="text" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-right:1rem;margin-left: -.2rem;" />
+      <button type="submit" id="send" style="margin-left:2rem;">Save</button>
 
-      <img src="/img/quill-drawing-a-line.png" style="font-size: 1em;" id="add" alt="" width="20" height="20" onclick="newItem()"/>
-
-      <button type="submit" id="send" style="display: none; margin-left:2rem;">Save</button>
+    </div>
     </form>
 
     <%}else{%>
@@ -34,18 +44,20 @@
   </fieldset>
 </div>
 <script>
-  function funci(element) {
-    // console.log(element);
-    
-    document.getElementById("c"+element.className).setAttribute("type", "hidden");
-    document.getElementById("img"+element.className).style.display= "none";
-    document.getElementById("p"+element.className).style.display= "none";
-    document.getElementById("input"+element.className).setAttribute("type", "text");
-    document.getElementById("save").style.display ="";
+  function edit(element) {
+  const id = element.className;
   
+  document.getElementById("div"+id).style.display= "none";
+  document.getElementById("edit"+id).style.display= "flex";
+
   }
+
  function removeEntry(v){
-    v.type ="hidden"
+   
+ }
+ function newItem(element){
+  element.style.display="none"
+  document.getElementById("newEntry").style.display ="flex"
  }
 
 
