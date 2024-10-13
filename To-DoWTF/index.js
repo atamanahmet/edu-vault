@@ -8,7 +8,7 @@ let currentUser;
 let users = [];
 let error;
 let userToDo;
-var editId;
+
 
 const db = new pg.Client({
   host: "localhost",
@@ -34,10 +34,10 @@ db.query("select name, id from users", (err, res) => {
 });
 
 app.get("/", async (req, res) => {
+ 
   const result = await getDb();
-  //   console.log(result.rows);
   let data = [];
-  // console.log(result.rows);
+  
   if (currentUser) {
     const userDbCall = await userDb();  
     userDbCall.rows.forEach((item) => {
@@ -51,7 +51,15 @@ app.get("/", async (req, res) => {
     error = "No user selected";
     res.render("index.ejs", { users: users, error: error });
   }
+
+
 });
+
+app.get("/reset",(req,res) => {
+  currentUser=null;
+  res.render("index.ejs", { users: users, error: error });
+})
+
 app.post("/userSelect", async (req, res) => {
   currentUser = Number(req.body.id);
   userToDo = null;
@@ -65,7 +73,7 @@ app.post("/update", async (req, res) => {
   const id = Number(Object.keys(req.body)[0]);
   console.log(id);
   const todoitem = Object.values(req.body)[0];
-  
+
    if(req.body.checkbox){
     console.log("checked");
     await db.query("delete from todo where todo.id=$1",[id])

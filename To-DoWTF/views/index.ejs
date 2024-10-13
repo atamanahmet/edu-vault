@@ -1,6 +1,13 @@
 <%- include("partials/header.ejs") %>
 <div class="container" style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center;">
   <h1>To-Don't List</h1>
+  <div>
+    <%if(locals.data){%>
+    <form action="/reset" method="get" id="goBack">
+    <img src="/img/left-arrow.png" style="margin:auto; padding-bottom: .19rem; margin-left: 1.4rem;" cursor: pointer;" onclick="userSelect()" width="25">
+    <button type="submit" id="goBack" style="display:none;"></button>
+  </form>
+  <% } %>
   <fieldset
     style="display: flex; flex-flow: column nowrap; justify-content: center; align-items: center; width: 400px; border-radius: 25px;"
   >
@@ -51,6 +58,7 @@
     <% }%>
   </fieldset>
 </div>
+</div>
 <script>
   function edit(element) {
   const id = element.className;
@@ -75,6 +83,9 @@ document.getElementById("add").style.display="";
  function newItem(element){
   element.style.display="none"
   document.getElementById("newEntry").style.display ="grid"
+ }
+ function userSelect() {
+  document.getElementById("goBack").submit();
  }
 
 
