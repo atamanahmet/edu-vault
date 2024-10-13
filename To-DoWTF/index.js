@@ -61,10 +61,10 @@ app.post("/userSelect", async (req, res) => {
 
 app.post("/update", async (req, res) => {
   // console.log(req.body);
-  const id = Object.keys(req.body);
-  console.log(id);
+  const id = Number(Object.keys(req.body));
+  // console.log(id);
   const todoitem = Object.values(req.body)[0];
-  // await db.query("update todo set todoitem=$1, user_id=$2 where id=$3", [todoitem, currentUser, id])
+  await db.query("update todo set todoitem=$1, user_id=$2 where id=$3", [todoitem, currentUser, id])
   const userDbCall = await userDb();
   res.redirect("/");
 });
