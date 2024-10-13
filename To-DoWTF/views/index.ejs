@@ -7,22 +7,22 @@
     <%if(locals.data){%>
    
       <% data.forEach((item)=>{%>
-        <form action="/update" method="post">
+        <form action="/update" method="post" id="update">
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 7fr; min-width: 400px;" id="div<%=item.id%>">
-        <form action="/remove" method="post">
-      <input type="checkbox" onclick="removeItem(this);" id="<%=item.id%>" style="width: 15px; height: 15px; margin: auto;">
-    </form>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 8fr; min-width: 400px;" id="div<%=item.id%>">
+       
+      <input type="checkbox" name="checkbox" id="<%=item.id%>" style="width: 15px; height: 15px; margin: auto;" onclick="removeItem(this)">
+   
       <img src="/img/edit.png" class="<%=item.id%>" alt="" width="15" height="15" style="margin:auto; padding-bottom: .19rem;" cursor: pointer;" onclick="edit(this)">
       
+      
       <div></div>
-      <div></div>
-      <p ><%=item.todoitem%></p>
+      <p><%=item.todoitem%></p>
       
       </div>
       <div style="display: none; flex-flow: row nowrap; gap:1rem; height: 40px; align-items: center;" id="edit<%=item.id%>">
-        <input type="text" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-left: -.2rem; display: inherit;" name="<%=item.id %>" value="<%=item.todoitem%>">
-        <button type="submit" id="save">Save</button>
+        <input type="text" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-left: -.2rem; display: inherit;" name="<%=item.id%>" value="<%=item.todoitem%>" required>
+        <button type="submit" id="save" style="background-color: rgb(113, 186, 255); color: black;border:none;border-radius:10px;padding: .6rem;">Save</button>
       </div>
     </form>
       <% }) %>
@@ -33,8 +33,8 @@
       <img src="/img/add-button.png" style="font-size: 1em;cursor: pointer;" id="add" alt="" width="20" height="20" onclick="newItem(this)"/>
 
       <div id="newEntry" style="display: none;">
-      <input type="text" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-right:1rem;margin-left: -.2rem;" />
-      <button type="submit" id="send" style="margin-left:2rem;">Save</button>
+      <input type="text" name="newEntry" id="newEntry" style="padding: 0.2rem .4rem 0.2rem .4rem; margin-right:1rem; margin-left: -.2rem;" required />
+      <button type="submit" id="send" style="margin-left:2rem;background-color: rgb(113, 186, 255); color: black; border:none;border-radius:10px;padding: .6rem;">Save</button>
 
     </div>
     </form>
@@ -59,10 +59,12 @@
 
   }
 
- function removeItem(element){
-  const id = element.id;
-  //  document.getElementById("div"+id).style.display= "none";
-  document.getElementById('save').submit.call(document.frmProduct)
+ function removeItem(checkbox){
+  const id = checkbox.id;
+  console.log(id);
+   document.getElementById("div"+id).style.display= "none";
+  document.getElementById("update").submit();
+  
   
  }
  function newItem(element){
