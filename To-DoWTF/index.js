@@ -8,6 +8,7 @@ let currentUser;
 let users = [];
 let error;
 let userToDo;
+var editId;
 
 const db = new pg.Client({
   host: "localhost",
@@ -34,7 +35,7 @@ db.query("select name, id from users", (err, res) => {
 
 app.get("/", async (req, res) => {
   const result = await getDb();
-//   console.log(result.rows);
+  //   console.log(result.rows);
   let data = [];
   // console.log(result.rows);
   if (currentUser) {
@@ -52,41 +53,30 @@ app.get("/", async (req, res) => {
 });
 app.post("/userSelect", async (req, res) => {
   currentUser = Number(req.body.id);
-  userToDo=null;
+  userToDo = null;
   userToDo = await userDb();
 
   res.redirect("/");
 });
 
 app.post("/update", async (req, res) => {
-   console.log(req.body);
-// console.log(req.body);
-    const userDbCall= await userDb();
-    
-    const todoItems = req.body.input[0];
-    console.log(todoItems);
-
-   userDbCall.rows.forEach(dbItem => {
-    console.log(dbItem);
-    userInputs.forEach(async update => {
-      console.log(update);
-        if(update.id==dbItem.id){
-          console.log(update);
-            if(dbItem.todoitem!=update.todoitem){
-               await db.query("update todo set todoitem=$1 where id=$2",[todoItems, currentUser])
-            }
-        }
-    });
-   });
-
-   res.redirect("/");
+  // console.log(req.body);
+  const id = Object.keys(req.body);
+  console.log(id);
+  const todoitem = Object.values(req.body)[0];
+  // await db.query("update todo set todoitem=$1, user_id=$2 where id=$3", [todoitem, currentUser, id])
+  const userDbCall = await userDb();
+  res.redirect("/");
 });
 
-app.post("/new", async (req,res) => {
-    const newEntry = req.body.newEntry;
-    await db.query("insert into todo (user_id, todoitem) values ($1, $2)", [currentUser, newEntry]);
-    res.redirect("/");
-})
+app.post("/new", async (req, res) => {
+  const newEntry = req.body.newEntry;
+  await db.query("insert into todo (user_id, todoitem) values ($1, $2)", [
+    currentUser,
+    newEntry,
+  ]);
+  res.redirect("/");
+});
 
 app.listen(port, (req, res) => {
   console.log("Server Online on port : " + port);
@@ -99,6 +89,7 @@ async function getDb() {
 }
 async function userDb() {
   return await db.query(
-    "select * from todo where todo.user_id=($1) order by id asc", [currentUser]
+    "select * from todo where todo.user_id=($1) order by id asc",
+    [currentUser]
   );
 }
