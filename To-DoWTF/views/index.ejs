@@ -14,7 +14,6 @@
     <form action="/reset" method="get" id="goBack">
       <img src="/img/left-arrow.png" style="margin:auto; padding-bottom: .19rem;
       margin-left: 1.4rem;" cursor: pointer;" onclick="userSelect()" width="25">
-      
     </form>
     <% } %>
     <fieldset
@@ -50,9 +49,9 @@
           pointer;" onclick="edit(this)">
 
           <div></div>
-          <ul style="list-style: none;">
-          <li><%=item.todoitem%></li>
-        </ul>
+          <ul style="list-style: none">
+            <li><%=item.todoitem%></li>
+          </ul>
         </div>
         <div
           style="
@@ -192,11 +191,9 @@
   }
 
   function removeItem(checkbox) {
-    
     console.log();
     document.getElementById("div" + checkbox.id).style.display = "none";
     document.getElementById("update").submit();
-    
   }
   function back() {
     document.getElementById("newEntry").style.display = "none";
