@@ -50,7 +50,9 @@
           pointer;" onclick="edit(this)">
 
           <div></div>
-          <p><%=item.todoitem%></p>
+          <ul style="list-style: none;">
+          <li><%=item.todoitem%></li>
+        </ul>
         </div>
         <div
           style="
@@ -191,8 +193,8 @@
 
   function removeItem(checkbox) {
     
-    console.log(checkbox.id);
-    document.getElementById("div" + id).style.display = "none";
+    console.log();
+    document.getElementById("div" + checkbox.id).style.display = "none";
     document.getElementById("update").submit();
     
   }
