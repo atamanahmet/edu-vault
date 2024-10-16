@@ -9,7 +9,6 @@ let users = [];
 let error;
 let userToDo;
 
-
 const db = new pg.Client({
   host: "localhost",
   user: "postgres",
@@ -34,11 +33,10 @@ db.query("select name, id from users", (err, res) => {
 });
 
 app.get("/", async (req, res) => {
- 
   let data = [];
-  
+
   if (currentUser) {
-    const userDbCall = await userDb();  
+    const userDbCall = await userDb();
     userDbCall.rows.forEach((item) => {
       if (item.user_id == currentUser) {
         data.push(item);
@@ -50,14 +48,12 @@ app.get("/", async (req, res) => {
     error = "No user selected";
     res.render("index.ejs", { users: users, error: error });
   }
-
-
 });
 
-app.get("/reset",(req,res) => {
-  currentUser=null;
+app.get("/reset", (req, res) => {
+  currentUser = null;
   res.render("index.ejs", { users: users, error: error });
-})
+});
 
 app.post("/userSelect", async (req, res) => {
   currentUser = Number(req.body.id);
@@ -73,16 +69,18 @@ app.post("/update", async (req, res) => {
   console.log(id);
   const todoitem = Object.values(req.body)[0];
 
-   if(req.body.checkbox){
+  if (req.body.checkbox) {
     console.log("checked");
-    await db.query("delete from todo where todo.id=$1",[id])
+    await db.query("delete from todo where todo.id=$1", [id]);
+    res.redirect("/");
+  } else {
+    await db.query("update todo set todoitem=$1, user_id=$2 where id=$3", [
+      todoitem,
+      currentUser,
+      id,
+    ]);
     res.redirect("/");
   }
-  else{
-    await db.query("update todo set todoitem=$1, user_id=$2 where id=$3", [todoitem, currentUser, id])
-    res.redirect("/");
-  }
- 
 });
 
 app.post("/new", async (req, res) => {
@@ -93,8 +91,6 @@ app.post("/new", async (req, res) => {
   ]);
   res.redirect("/");
 });
-
-
 
 app.listen(port, (req, res) => {
   console.log("Server Online on port : " + port);
