@@ -3,6 +3,7 @@ import pg from "pg";
 
 const app = express();
 const port = 3000;
+let error;
 const db = new pg.Client({
   host: "localhost",
   user: "postgres",
@@ -29,17 +30,25 @@ app.get("/register", (req, res) => {
 app.post("/register", async (req, res) => {
   const mail = req.body.mail;
   const password = req.body.password;
-  writeDB(mail, password, res);
-  res.redirect("/login");
+  await writeDB(mail, password, res);
+  if (error) {
+    res.render("register.ejs", {error:error})
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.post("/login", async (req, res) => {
-  // console.log(req.body);
   const mail = req.body.mail;
   const password = req.body.password;
   try {
     const asd = await getDB(mail);
+    console.log(password);
     console.log(asd);
+    if (password == asd.user_password) {
+      console.log("logged in");
+      res.render("secrets.ejs");
+    }
   } catch (err) {
     console.log(err.message);
   }
@@ -53,13 +62,12 @@ async function getDB(user) {
   try {
     db.connect();
     const result = await db.query("select * from userdb where mail=$1", [user]);
-    // console.log(result.rows);
-    return result.rows;
+    return result.rows[0];
   } catch (err) {
     console.log(err.message);
+  } finally {
+    db.end();
   }
-  
-  db.end();
 }
 async function writeDB(mail, password, res, req) {
   try {
@@ -68,11 +76,12 @@ async function writeDB(mail, password, res, req) {
       mail,
       password,
     ]);
-    db.end();
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
+    error = "User already exist. Try another email.";
+    return error;
+
+  } finally {
     db.end();
-    const error = "User already exist. Try to login.";
-    res.render("register.ejs");
   }
 }
