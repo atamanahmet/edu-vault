@@ -1,6 +1,11 @@
 <%- include('partials/header') %>
   <div class="container mt-5">
-    <h1>Register</h1>
+    <h1><% if(locals.error){%>
+      <%=error%>
+      <% } else{%>
+Register
+<% }%></h1>
+      
 
     <div class="row">
       <div class="col-sm-8">
