@@ -1,2 +1,5 @@
 node_modules
 apiKey.json
+.DS_Store
+queries.sql
+solution.js
