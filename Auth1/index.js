@@ -32,7 +32,7 @@ app.post("/register", async (req, res) => {
   const password = req.body.password;
   await writeDB(mail, password, res);
   if (error) {
-    res.render("register.ejs", {error:error})
+    res.render("register.ejs", { error: error });
   } else {
     res.redirect("/login");
   }
@@ -42,10 +42,10 @@ app.post("/login", async (req, res) => {
   const mail = req.body.mail;
   const password = req.body.password;
   try {
-    const asd = await getDB(mail);
+    const result = await getDB(mail);
     console.log(password);
-    console.log(asd);
-    if (password == asd.user_password) {
+    console.log(result);
+    if (password == result.user_password) {
       console.log("logged in");
       res.render("secrets.ejs");
     }
@@ -60,9 +60,12 @@ app.listen(port, () => {
 
 async function getDB(user) {
   try {
-    db.connect();
-    const result = await db.query("select * from userdb where mail=$1", [user]);
-    return result.rows[0];
+    db.connect(async  (err, user)=> {
+      if (err) console.log(err.message);
+      const result = await db.query("select * from userdb where mail=$1", [user]);
+      return result.rows[0];
+    });
+    
   } catch (err) {
     console.log(err.message);
   } finally {
@@ -70,18 +73,26 @@ async function getDB(user) {
   }
 }
 async function writeDB(mail, password, res, req) {
-  try {
-    db.connect();
-    await db.query("insert into userdb (mail, user_password) values ($1,$2)", [
+  db.connect(async (err) => {
+    if (err) console.log(err.message);
+    const result = await db.query("select mail from userdb where mail=$1", [
       mail,
-      password,
     ]);
-  } catch (err) {
-    // console.log(err.message);
-    error = "User already exist. Try another email.";
-    return error;
-
-  } finally {
-    db.end();
-  }
+    console.log(result.rows.length);
+    if (result.rows.length > 0) {
+      res.send("User exist. Try another email or log in.");
+      db.end();
+    } else {
+      try {
+        await db.query(
+          "insert into userdb (mail, user_password) values ($1,$2)",
+          [mail, password]
+        );
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        db.end();
+      }
+    }
+  });
 }
