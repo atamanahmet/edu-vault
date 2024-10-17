@@ -42,12 +42,17 @@ app.post("/login", async (req, res) => {
   const mail = req.body.mail;
   const password = req.body.password;
   try {
-    const result = await getDB(mail);
-    console.log(password);
-    console.log(result);
-    if (password == result.user_password) {
+    db.connect();
+    const result = await db.query("select * from userdb where mail=$1", [mail]);
+
+    const dbPassword = result.rows[0].user_password;
+    const dbMail = result.rows[0].mail;
+
+    if (password == dbPassword) {
       console.log("logged in");
       res.render("secrets.ejs");
+    } else {
+      res.send("Wrong password. Try Again.");
     }
   } catch (err) {
     console.log(err.message);
@@ -59,19 +64,30 @@ app.listen(port, () => {
 });
 
 async function getDB(user) {
-  try {
-    db.connect(async  (err, user)=> {
+  let data;
+  db.connect(async (err) => {
+    try {
       if (err) console.log(err.message);
-      const result = await db.query("select * from userdb where mail=$1", [user]);
-      return result.rows[0];
-    });
-    
-  } catch (err) {
-    console.log(err.message);
-  } finally {
+      const result = await db.query("select * from userdb where mail=$1", [
+        user,
+      ]);
+      console.log("result : ");
+      console.log(result.rows[0]);
+      data = result.rows[0];
+      console.log("data :");
+      console.log(data);
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      console.log("dbEnd");
+    }
     db.end();
-  }
+    console.log("data2 :");
+    console.log(data);
+    return data;
+  });
 }
+
 async function writeDB(mail, password, res, req) {
   db.connect(async (err) => {
     if (err) console.log(err.message);
