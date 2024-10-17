@@ -8,21 +8,17 @@ const db = new pg.Client({
   user: "postgres",
   password: "123456",
   database: "world",
-  port: 5432
+  port: 5432,
 });
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
-
 
 app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
 app.get("/login", (req, res) => {
-  getDB();
   res.render("login.ejs");
 });
 
@@ -31,17 +27,22 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  // console.log(req.body);
-  const mail = req.body.mail
+  const mail = req.body.mail;
   const password = req.body.password;
-  
+  writeDB(mail, password, res);
+  res.redirect("/login");
 });
 
 app.post("/login", async (req, res) => {
   // console.log(req.body);
-  const mail= req.body.mail
-  const password= req.body.password;
-  
+  const mail = req.body.mail;
+  const password = req.body.password;
+  try {
+    const asd = await getDB(mail);
+    console.log(asd);
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 app.listen(port, () => {
@@ -50,23 +51,28 @@ app.listen(port, () => {
 
 async function getDB(user) {
   try {
-  db.connect();
-  // const result = await db.query("select * from userdb where user.id=$1", [userId])
-  const result = await db.query("select * from userdb where name=$1",[user])
-  console.log(result.rows);
-  db.end();
+    db.connect();
+    const result = await db.query("select * from userdb where mail=$1", [user]);
+    // console.log(result.rows);
+    return result.rows;
   } catch (err) {
-console.log(err.message);
+    console.log(err.message);
   }
   
+  db.end();
 }
-async function writeDB(mail, password) {
+async function writeDB(mail, password, res, req) {
   try {
-  db.connect();
- await db.query("insert into userdb (mail, user_password) values ($1,$2)",[mail, password])
-  db.end();
+    db.connect();
+    await db.query("insert into userdb (mail, user_password) values ($1,$2)", [
+      mail,
+      password,
+    ]);
+    db.end();
   } catch (err) {
-console.log(err.message);
+    console.log(err.message);
+    db.end();
+    const error = "User already exist. Try to login.";
+    res.render("register.ejs");
   }
-  
 }
