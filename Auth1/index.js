@@ -7,16 +7,18 @@ const db = new pg.Client({
   host: "localhost",
   name: "postgres",
   password: "123456",
-  database: "world"
+  database: "world",
+  port: 5432
 });
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// getDB(1);
+
 
 app.get("/", (req, res) => {
+  getDB();
   res.render("home.ejs");
 });
 
