@@ -11,7 +11,7 @@ const db = new pg.Client({
   database: "world",
   port: 5432,
 });
-
+db.connect();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -42,20 +42,20 @@ app.post("/login", async (req, res) => {
   const mail = req.body.mail;
   const password = req.body.password;
   try {
-    db.connect();
-    const result = await db.query("select * from userdb where mail=$1", [mail]);
-
-    const dbPassword = result.rows[0].user_password;
-    const dbMail = result.rows[0].mail;
+    const user = await getDB(mail);
+    console.log(user);
+    const dbPassword = user.user_password;
 
     if (password == dbPassword) {
       console.log("logged in");
+
       res.render("secrets.ejs");
     } else {
       res.send("Wrong password. Try Again.");
     }
-  } catch (err) {
-    console.log(err.message);
+  } catch (error) {
+    res.send("User not found...");
+    console.log(error.message);
   }
 });
 
@@ -63,29 +63,9 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-async function getDB(user) {
-  let data;
-  db.connect(async (err) => {
-    try {
-      if (err) console.log(err.message);
-      const result = await db.query("select * from userdb where mail=$1", [
-        user,
-      ]);
-      console.log("result : ");
-      console.log(result.rows[0]);
-      data = result.rows[0];
-      console.log("data :");
-      console.log(data);
-    } catch (err) {
-      console.log(err.message);
-    } finally {
-      console.log("dbEnd");
-    }
-    db.end();
-    console.log("data2 :");
-    console.log(data);
-    return data;
-  });
+async function getDB(mail) {
+  const result = await db.query("select * from userdb where mail=$1", [mail]);
+  return result.rows[0];
 }
 
 async function writeDB(mail, password, res, req) {
