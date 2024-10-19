@@ -33,3 +33,18 @@ function App() {
 }
 
 export default App
+
+
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+
+// const container = document.getElementById("root");
+
+// const root = ReactDOM.createRoot(container);
+
+// root.render(
+//   <div>
+//     <h1>React Test</h1>
+//     <p>tTest 23</p>
+//   </div>
+// );
