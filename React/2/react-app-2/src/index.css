@@ -1,7 +1,8 @@
+* {
+  margin: 0.2rem;
+  line-height: 2rem;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-#root {
-  background-color: aqua;
 }
