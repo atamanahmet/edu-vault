@@ -7,7 +7,7 @@ const root = ReactDOM.createRoot(container);
 const name = "Aslı";
 
 root.render(
-  <div class="testDiv">
+  <div className="testDiv">
     <p>Created by {name}</p>
     <p>Copyright {new Date().getFullYear()}</p>
   </div>
