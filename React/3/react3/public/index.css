@@ -13,6 +13,23 @@ code {
 }
 
 * {
-  color: blue;
+  color: black;
   margin: 0.4rem;
+}
+.listImg {
+  width: 100px;
+  height: 100px;
+}
+ul {
+  list-style: none;
+}
+.main {
+  display: block;
+}
+.testDiv {
+  min-height: 100vh;
+}
+.copy {
+  position: fixed;
+  bottom: 0;
 }
