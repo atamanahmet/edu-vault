@@ -5,14 +5,13 @@ import "./index.css";
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 
+const name = "Aslı";
+let randomNum = Math.floor(Math.random * 10);
+
+console.log(randomNum);
 root.render(
   <div>
-    <h1>Test</h1>
-    <ul>
-      <li>Item1</li>
-      <li>Item2</li>
-      <li>Item3</li>
-      <li>Item4</li>
-    </ul>
+    <h1>Hello {name}</h1>
+    <p>Your lucky number is {randomNum}</p>
   </div>
 );
