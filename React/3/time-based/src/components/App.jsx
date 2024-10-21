@@ -1,7 +1,7 @@
 import React from "react";
-import Heading from "./Heading.jsx";
-import Welcome from "./Welcome.jsx";
-import List from "./List";
+import Heading from "../components/Heading.jsx";
+import Welcome from "../components/Welcome.jsx";
+import List from "../components/List";
 
 function App() {
   return (
