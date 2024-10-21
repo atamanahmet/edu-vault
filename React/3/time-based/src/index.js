@@ -8,8 +8,6 @@ let setStyle = {
   color: "black",
 };
 const getDate = new Date().getHours();
-// console.log(getDate);
-// const getDate = 22;
 
 if (getDate < 12) {
   welcome = welcome + "morning vietnam";
@@ -27,6 +25,8 @@ if (getDate < 12) {
 
 root.render(
   <div className="container">
-    <h1 style={setStyle}>{welcome}</h1>
+    <h1 className="heading" style={setStyle}>
+      {welcome}
+    </h1>
   </div>
 );
