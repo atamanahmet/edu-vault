@@ -5,7 +5,7 @@ function Contacts(props) {
   return (
     <div className="contact">
       <h2 className="nameTitle">{props.name}</h2>
-      <Avatar imgSrc={props.imgSrc}></Avatar>
+      <Avatar imgSrc={props.imgSrc} />
       <p>{props.tel}</p>
       <p>{props.mail}</p>
     </div>
