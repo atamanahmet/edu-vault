@@ -5,7 +5,6 @@ import Contacts from "./components/contacts.jsx";
 import Footer from "./components/footer.jsx";
 import contactInfo from "./components/contactInfo.js";
 
-console.log(contactInfo[0]);
 function App() {
   return (
     <div id="main">
