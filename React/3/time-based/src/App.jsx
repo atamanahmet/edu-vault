@@ -5,29 +5,25 @@ import Card from "./components/Card.jsx";
 import Footer from "./components/footer.jsx";
 import contactInfo from "./components/contactInfo.js";
 
+function createContact(contact) {
+  return (
+    <Card
+      key={contact.id}
+      // id={contact.id}
+      name={contact.name}
+      mail={contact.mail}
+      imgSrc={contact.imgSrc}
+      tel={contact.tel}
+    />
+  );
+}
+
 function App() {
   return (
     <div id="main">
       <Welcome></Welcome>
       <Heading></Heading>
-      <Card
-        name={contactInfo[0].name}
-        imgSrc={contactInfo[0].imgSrc}
-        mail={contactInfo[0].mail}
-        tel={contactInfo[0].tel}
-      />
-      <Card
-        name={contactInfo[1].name}
-        imgSrc={contactInfo[1].imgSrc}
-        mail={contactInfo[1].mail}
-        tel={contactInfo[1].tel}
-      />
-      <Card
-        name={contactInfo[2].name}
-        imgSrc={contactInfo[2].imgSrc}
-        mail={contactInfo[2].mail}
-        tel={contactInfo[2].tel}
-      />
+      {contactInfo.map(createContact)}
 
       <hr />
       <Footer></Footer>

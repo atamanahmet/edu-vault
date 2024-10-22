@@ -7,6 +7,7 @@ function Card(props) {
     <div className="contact">
       <h2 className="nameTitle">{props.name}</h2>
       <Avatar imgSrc={props.imgSrc} />
+      <p>{props.id}</p>
       <Details info={props.tel}></Details>
       <Details info={props.mail}></Details>
     </div>
