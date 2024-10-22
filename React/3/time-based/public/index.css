@@ -15,5 +15,19 @@ code {
   font-size: 3rem;
 }
 * {
-  margin-left: 1rem;
+  margin-top: 0.4rem;
+  margin-left: 0.4rem;
+}
+footer {
+  margin-top: 2rem;
+  font-size: 0.6rem;
+}
+.contact {
+  width: 250px;
+  height: 150px;
+  background-color: aqua;
+}
+.contact img {
+  width: 100px;
+  border-radius: 50%;
 }
