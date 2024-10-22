@@ -5,8 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
 }
-
+/* #main {
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: center;
+  justify-content: center;
+} */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -23,11 +29,33 @@ footer {
   font-size: 0.6rem;
 }
 .contact {
+  margin: auto;
+  text-align: left;
+  position: relative;
   width: 250px;
   height: 150px;
   background-color: aqua;
+  border-radius: 20px;
+  margin-bottom: 2rem;
 }
 .contact img {
-  width: 100px;
+  border: 4px solid white;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  margin: 0.4rem;
+  width: 75px;
   border-radius: 50%;
+  float: right;
+}
+.contact p {
+  font-size: 0.6rem;
+}
+
+.nameTitle {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 1rem;
+  margin-left: 0;
+  background-color: rgb(1, 189, 214);
 }

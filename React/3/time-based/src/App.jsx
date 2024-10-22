@@ -6,13 +6,25 @@ import Footer from "./components/footer.jsx";
 
 function App() {
   return (
-    <div>
+    <div id="main">
       <Welcome></Welcome>
       <Heading></Heading>
       <Contacts
         name="Ahmet"
         imgSrc="https://placehold.co/200"
         mail="ataman@gmail.co"
+        tel="+905886994747"
+      />
+      <Contacts
+        name="Aslı"
+        imgSrc="https://placehold.co/200"
+        mail="aslı@gmail.co"
+        tel="+905886994747"
+      />
+      <Contacts
+        name="Aslı"
+        imgSrc="https://placehold.co/200"
+        mail="aslı@gmail.co"
         tel="+905886994747"
       />
       <hr />
