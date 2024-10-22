@@ -1,14 +1,14 @@
 import React from "react";
-import * as Calc from "./Calculator.jsx";
+// import * as Calc from "./Calculator.jsx";
 
-function List() {
+function List(props) {
   return (
-    <ul>
-      <li>{Calc.add(1, 4)}</li>
-      <li>{Calc.subtract(1, 4)}</li>
-      <li>{Calc.multiply(1, 4)}</li>
-      <li>{Calc.divide(1, 4)}</li>
-    </ul>
+    <div>
+      <h2>{props.name}</h2>
+      <img src={props.imgSrc} alt="profile" />
+      <p>{props.tel}</p>
+      <p>{props.mail}</p>
+    </div>
   );
 }
 export default List;
