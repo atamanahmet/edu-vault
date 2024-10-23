@@ -2,8 +2,6 @@ import React from "react";
 import emojipedia from "../emojipedia.js";
 import Entry from "./Entry.jsx";
 
-console.log(emojipedia);
-
 function createEntry(emojiTerm) {
   return (
     <Entry
@@ -14,6 +12,11 @@ function createEntry(emojiTerm) {
     />
   );
 }
+// console.log(emojipedia);
+// const newArray = emojipedia.map((item) => {
+//   return item.meaning.substring(0, 100);
+// });
+// console.log(newArray);
 
 function App() {
   return (
