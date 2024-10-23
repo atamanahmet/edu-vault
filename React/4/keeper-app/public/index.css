@@ -16,11 +16,11 @@ code {
 }
 .Header {
   box-shadow: 0px 0.3px 5px 0.5px rgba(128, 128, 128, 0.651);
-  padding: 0.4rem;
+  padding: 1rem;
   padding-left: 1rem;
   background-color: rgb(255, 174, 0);
   color: white;
-  font-size: 0.5rem;
+  font-size: 1rem;
 }
 .App {
   margin-top: 0;
@@ -28,21 +28,25 @@ code {
   /* margin: 0.4rem; */
 }
 .Footer {
-  padding: 0.4rem;
+  padding: 1rem;
   min-width: 100vw;
   background-color: rgb(255, 174, 0);
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   position: fixed;
   bottom: 0;
 }
 .Note {
   border-radius: 10px;
-  box-shadow: 0.5px 0.5px 3px 1px rgba(128, 128, 128, 0.178);
+  box-shadow: 0.5px 0.5px 3px 1px rgba(128, 128, 128, 0.267);
   margin: 1rem;
-  padding: 0.1rem;
+  padding: 0.4rem;
   text-align: center;
   background-color: rgb(255, 255, 255);
-  width: 150px;
-  height: 200px;
-  font-size: 0.6rem;
+  width: 300px;
+  height: 150px;
+  font-size: 0.7rem;
+}
+.Note p {
+  margin-top: 0.8rem;
+  font-size: 1rem;
 }
