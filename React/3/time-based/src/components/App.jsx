@@ -4,13 +4,13 @@ import Entry from "./Entry.jsx";
 
 console.log(emojipedia);
 
-function createEntry(item) {
+function createEntry(emojiTerm) {
   return (
     <Entry
-      key={item.id}
-      name={item.name}
-      emoji={item.emoji}
-      meaning={item.meaning}
+      key={emojiTerm.id}
+      name={emojiTerm.name}
+      emoji={emojiTerm.emoji}
+      meaning={emojiTerm.meaning}
     />
   );
 }
