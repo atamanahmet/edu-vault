@@ -141,8 +141,11 @@ function App() {
   });
 
   function handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+    // const name = event.target.name;
+    // const value = event.target.value;
+
+    const { name, value } = event.target;
+
     if (name === "fName") {
       setContact((prevState) => {
         return {
