@@ -63,70 +63,128 @@
 
 // export default App;
 
+// import React, { useState } from "react";
+
+// function App() {
+//   const [fullName, setFullName] = useState({
+//     firstName: "",
+//     lastName: "",
+//   });
+//   function handleChange(event) {
+//     const name = event.target.name;
+//     const value = event.target.value;
+
+//     // if (name == "firstName") {
+//     //   setFullName((prevState) => {
+//     //     return {
+//     //       firstName: value,
+//     //       lastName: prevState.lastName,
+//     //     };
+//     //   });
+//     // } else if (name == "lastName") {
+//     //   setFullName((prevState) => {
+//     //     return {
+//     //       firstName: prevState.firstName,
+//     //       lastName: value,
+//     //     };
+//     //   });
+//     // }
+
+//     name === "firstName"
+//       ? setFullName((prevState) => {
+//           return {
+//             firstName: value,
+//             lastName: prevState.lastName,
+//           };
+//         })
+//       : setFullName((prevState) => {
+//           return {
+//             firstName: prevState.firstName,
+//             lastName: value,
+//           };
+//         });
+//   }
+//   return (
+//     <div className="container">
+//       <h1>
+//         Hello {fullName.firstName} {fullName.lastName}
+//       </h1>
+//       <form>
+//         <input
+//           type="text"
+//           name="firstName"
+//           placeholder="First Name"
+//           onChange={handleChange}
+//           value={fullName.firstName}
+//         />
+//         <input
+//           type="text"
+//           name="lastName"
+//           placeholder="Last Name"
+//           onChange={handleChange}
+//           value={fullName.LastName}
+//         />
+//         <button>Submit</button>
+//       </form>
+//     </div>
+//   );
+// }
+// export default App;
+
 import React, { useState } from "react";
 
 function App() {
-  const [fullName, setFullName] = useState({
-    firstName: "",
-    lastName: "",
+  const [contact, setContact] = useState({
+    fName: "",
+    lName: "",
+    email: "",
   });
+
   function handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
-
-    // if (name == "firstName") {
-    //   setFullName((prevState) => {
-    //     return {
-    //       firstName: value,
-    //       lastName: prevState.lastName,
-    //     };
-    //   });
-    // } else if (name == "lastName") {
-    //   setFullName((prevState) => {
-    //     return {
-    //       firstName: prevState.firstName,
-    //       lastName: value,
-    //     };
-    //   });
-    // }
-
-    name === "firstName"
-      ? setFullName((prevState) => {
-          return {
-            firstName: value,
-            lastName: prevState.lastName,
-          };
-        })
-      : setFullName((prevState) => {
-          return {
-            firstName: prevState.firstName,
-            lastName: value,
-          };
-        });
+    if (name === "fName") {
+      setContact((prevState) => {
+        return {
+          fName: value,
+          lName: prevState.lName,
+          email: prevState.email,
+        };
+      });
+    }
+    if (name === "lName") {
+      setContact((prevState) => {
+        return {
+          fName: prevState.fName,
+          lName: value,
+          email: prevState.email,
+        };
+      });
+    }
+    if (name === "email") {
+      setContact((prevState) => {
+        return {
+          fName: prevState.fName,
+          lName: prevState.lName,
+          email: value,
+        };
+      });
+    }
   }
   return (
     <div className="container">
       <h1>
-        Hello {fullName.firstName} {fullName.lastName}
+        Hello {contact.fName} {contact.lName}
       </h1>
+      <p>{contact.email}</p>
       <form>
-        <input
-          type="text"
-          name="firstName"
-          placeholder="First Name"
-          onChange={handleChange}
-          value={fullName.firstName}
-        />
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Last Name"
-          onChange={handleChange}
-          value={fullName.LastName}
-        />
+        <input name="fName" placeholder="First Name" onChange={handleChange} />
+        <input name="lName" placeholder="Last Name" onChange={handleChange} />
+        <input name="email" placeholder="Email" onChange={handleChange} />
         <button>Submit</button>
       </form>
     </div>
   );
 }
+
 export default App;
