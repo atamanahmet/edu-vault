@@ -90,7 +90,7 @@ function App() {
     //   });
     // }
 
-    name == "firstName"
+    name === "firstName"
       ? setFullName((prevState) => {
           return {
             firstName: value,
