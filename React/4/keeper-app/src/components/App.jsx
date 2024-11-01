@@ -22,11 +22,12 @@
 import React, { useState } from "react";
 
 function App() {
-  const [heading, setHeading] = useState("Hello");
+  const [heading, setHeading] = useState("");
   const [isMouse, setIsMouse] = useState(false);
+  const [name, setName] = useState();
 
   function submitFunc() {
-    setHeading("Submitted");
+    setHeading(name);
   }
   function mouseOver() {
     setIsMouse(true);
@@ -34,11 +35,20 @@ function App() {
   function mouseLeave() {
     setIsMouse(false);
   }
+  function handleChange(event) {
+    setName(event.target.value);
+    console.log(event.target);
+  }
 
   return (
     <div className="container">
-      <h1>{heading}</h1>
-      <input type="text" placeholder="What's your name?" />
+      <h1>Hello {heading}</h1>
+      <input
+        type="text"
+        placeholder="What's your name?"
+        onChange={handleChange}
+        value={name}
+      />
       <button
         onClick={submitFunc}
         onMouseMove={mouseOver}
