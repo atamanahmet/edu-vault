@@ -146,33 +146,40 @@ function App() {
 
     const { name, value } = event.target;
 
-    if (name === "fName") {
-      setContact((prevState) => {
-        return {
-          fName: value,
-          lName: prevState.lName,
-          email: prevState.email,
-        };
-      });
-    }
-    if (name === "lName") {
-      setContact((prevState) => {
-        return {
-          fName: prevState.fName,
-          lName: value,
-          email: prevState.email,
-        };
-      });
-    }
-    if (name === "email") {
-      setContact((prevState) => {
-        return {
-          fName: prevState.fName,
-          lName: prevState.lName,
-          email: value,
-        };
-      });
-    }
+    setContact((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+
+    // if (name === "fName") {
+    //   setContact((prevState) => {
+    //     return {
+    //       fName: value,
+    //       lName: prevState.lName,
+    //       email: prevState.email,
+    //     };
+    //   });
+    // }
+    // if (name === "lName") {
+    //   setContact((prevState) => {
+    //     return {
+    //       fName: prevState.fName,
+    //       lName: value,
+    //       email: prevState.email,
+    //     };
+    //   });
+    // }
+    // if (name === "email") {
+    //   setContact((prevState) => {
+    //     return {
+    //       fName: prevState.fName,
+    //       lName: prevState.lName,
+    //       email: value,
+    //     };
+    //   });
+    // }
   }
   return (
     <div className="container">
