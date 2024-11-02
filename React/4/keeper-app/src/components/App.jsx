@@ -212,7 +212,9 @@ function App() {
       const value = event.target.value;
       setInputText(value);
     } else if (type === "submit") {
-      setItems([...items, inputText]);
+      setItems((prevState) => {
+        return [...prevState, inputText];
+      });
       setInputText("");
     }
   }
