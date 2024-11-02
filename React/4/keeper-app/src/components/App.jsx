@@ -198,54 +198,54 @@
 // }
 
 // export default App;import React, { useState } from "react";
-import React, { useState } from "react";
-import List from "./List";
+// import React, { useState } from "react";
+// import List from "./List";
 
-function App() {
-  const [inputText, setInputText] = useState("");
-  const [items, setItems] = useState([]);
+// function App() {
+//   const [inputText, setInputText] = useState("");
+//   const [items, setItems] = useState([]);
 
-  function handleInput(event) {
-    const { name, type } = event.target;
+//   function handleInput(event) {
+//     const { name, type } = event.target;
 
-    if (name === "input") {
-      const value = event.target.value;
-      setInputText(value);
-    } else if (type === "submit") {
-      setItems((prevState) => {
-        return [...prevState, inputText];
-      });
-      setInputText("");
-    }
-  }
-  return (
-    <div className="container">
-      <div className="heading">
-        <h1>To-Do List</h1>
-      </div>
-      <div className="form">
-        <input
-          type="text"
-          name="input"
-          placeholder="Enter an item"
-          onChange={handleInput}
-          value={inputText}
-        />
+//     if (name === "input") {
+//       const value = event.target.value;
+//       setInputText(value);
+//     } else if (type === "submit") {
+//       setItems((prevState) => {
+//         return [...prevState, inputText];
+//       });
+//       setInputText("");
+//     }
+//   }
+//   return (
+//     <div className="container">
+//       <div className="heading">
+//         <h1>To-Do List</h1>
+//       </div>
+//       <div className="form">
+//         <input
+//           type="text"
+//           name="input"
+//           placeholder="Enter an item"
+//           onChange={handleInput}
+//           value={inputText}
+//         />
 
-        <button name="btn" onClick={handleInput}>
-          Add
-        </button>
-      </div>
-      <div>
-        <ul>
-          <List items={items} />
-        </ul>
-      </div>
-    </div>
-  );
-}
+//         <button name="btn" onClick={handleInput}>
+//           Add
+//         </button>
+//       </div>
+//       <div>
+//         <ul>
+//           <List items={items} />
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// }
 
-export default App;
+// export default App;
 
 import React from "react";
 
@@ -263,4 +263,3 @@ function List(props) {
   });
 }
 export default List;
-
