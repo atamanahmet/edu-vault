@@ -241,19 +241,73 @@
 
 // export default App;
 
-import React from "react";
+// import React from "react";
 
-function List(props) {
-  function clickHandle(event) {
-    const lineState = event.target.style.textDecoration;
-    if (lineState === "line-through") {
-      event.target.style.textDecoration = "";
-    } else {
-      event.target.style.textDecoration = "line-through";
-    }
+// function List(props) {
+//   function clickHandle(event) {
+//     const lineState = event.target.style.textDecoration;
+//     if (lineState === "line-through") {
+//       event.target.style.textDecoration = "";
+//     } else {
+//       event.target.style.textDecoration = "line-through";
+//     }
+//   }
+//   return props.items.map((item) => {
+//     return <li onClick={clickHandle}>{item}</li>;
+//   });
+// }
+// export default List;
+
+import React, { useState } from "react";
+import List from "./List";
+
+function App() {
+  const [inputText, setInputText] = useState("");
+  const [items, setItems] = useState([]);
+
+  function handleChange(event) {
+    const newValue = event.target.value;
+    setInputText(newValue);
   }
-  return props.items.map((item) => {
-    return <li onClick={clickHandle}>{item}</li>;
-  });
+
+  function addItem() {
+    setItems((prevItems) => {
+      return [...prevItems, inputText];
+    });
+    setInputText("");
+  }
+  function deleteItem(event) {
+    const selectItem = event.target.textContent;
+
+    setItems((prevState) => {
+      return prevState.filter((item) => {
+        return item !== selectItem;
+      });
+    });
+  }
+
+  return (
+    <div className="container">
+      <div className="heading">
+        <h1>To-Do List</h1>
+      </div>
+      <div className="form">
+        <input onChange={handleChange} type="text" value={inputText} />
+        <button onClick={addItem}>
+          <span>Add</span>
+        </button>
+      </div>
+      <div>
+        <ul>
+          {items.map((item, index) => {
+            return (
+              <List key={index} id={index} text={item} onDone={deleteItem} />
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
 }
-export default List;
+
+export default App;
