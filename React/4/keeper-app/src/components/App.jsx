@@ -276,12 +276,10 @@ function App() {
     });
     setInputText("");
   }
-  function deleteItem(event) {
-    const itemId = Number(event.target.id);
-
+  function deleteItem(id) {
     setItems((prevState) => {
       return prevState.filter((item, index) => {
-        return index !== itemId;
+        return index !== id;
       });
     });
   }
