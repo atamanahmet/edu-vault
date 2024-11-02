@@ -246,3 +246,21 @@ function App() {
 }
 
 export default App;
+
+import React from "react";
+
+function List(props) {
+  function clickHandle(event) {
+    const lineState = event.target.style.textDecoration;
+    if (lineState === "line-through") {
+      event.target.style.textDecoration = "";
+    } else {
+      event.target.style.textDecoration = "line-through";
+    }
+  }
+  return props.items.map((item) => {
+    return <li onClick={clickHandle}>{item}</li>;
+  });
+}
+export default List;
+
