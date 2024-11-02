@@ -277,11 +277,11 @@ function App() {
     setInputText("");
   }
   function deleteItem(event) {
-    const selectItem = event.target.textContent;
+    const itemId = Number(event.target.id);
 
     setItems((prevState) => {
-      return prevState.filter((item) => {
-        return item !== selectItem;
+      return prevState.filter((item, index) => {
+        return index !== itemId;
       });
     });
   }
