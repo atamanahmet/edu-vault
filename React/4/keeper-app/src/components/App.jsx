@@ -197,4 +197,50 @@
 //   );
 // }
 
-// export default App;
+// export default App;import React, { useState } from "react";
+import React, { useState } from "react";
+import List from "./List";
+
+function App() {
+  const [input, setInput] = useState("");
+  const [items, setItems] = useState([]);
+
+  function handleInput(event) {
+    const { name, type } = event.target;
+
+    if (name === "input") {
+      const value = event.target.value;
+      setInput(value);
+    } else if (type === "submit") {
+      setItems([...items, input]);
+      setInput("");
+    }
+  }
+  return (
+    <div className="container">
+      <div className="heading">
+        <h1>To-Do List</h1>
+      </div>
+      <div className="form">
+        <input
+          type="text"
+          name="input"
+          placeholder="Enter an item"
+          onChange={handleInput}
+          value={input}
+        />
+
+        <button name="btn" onClick={handleInput}>
+          Add
+        </button>
+      </div>
+      <div>
+        <ul>
+          <List items={items} />
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default App;
