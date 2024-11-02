@@ -205,40 +205,34 @@
 //   const [inputText, setInputText] = useState("");
 //   const [items, setItems] = useState([]);
 
-//   function handleInput(event) {
-//     const { name, type } = event.target;
-
-//     if (name === "input") {
-//       const value = event.target.value;
-//       setInputText(value);
-//     } else if (type === "submit") {
-//       setItems((prevState) => {
-//         return [...prevState, inputText];
-//       });
-//       setInputText("");
-//     }
+//   function handleChange(event) {
+//     const newValue = event.target.value;
+//     setInputText(newValue);
 //   }
+
+//   function addItem() {
+//     setItems((prevItems) => {
+//       return [...prevItems, inputText];
+//     });
+//     setInputText("");
+//   }
+
 //   return (
 //     <div className="container">
 //       <div className="heading">
 //         <h1>To-Do List</h1>
 //       </div>
 //       <div className="form">
-//         <input
-//           type="text"
-//           name="input"
-//           placeholder="Enter an item"
-//           onChange={handleInput}
-//           value={inputText}
-//         />
-
-//         <button name="btn" onClick={handleInput}>
-//           Add
+//         <input onChange={handleChange} type="text" value={inputText} />
+//         <button onClick={addItem}>
+//           <span>Add</span>
 //         </button>
 //       </div>
 //       <div>
 //         <ul>
-//           <List items={items} />
+//           {items.map((item) => {
+//             return <List text={item} />;
+//           })}
 //         </ul>
 //       </div>
 //     </div>
