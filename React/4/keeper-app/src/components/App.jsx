@@ -202,7 +202,7 @@ import React, { useState } from "react";
 import List from "./List";
 
 function App() {
-  const [input, setInput] = useState("");
+  const [inputText, setInputText] = useState("");
   const [items, setItems] = useState([]);
 
   function handleInput(event) {
@@ -210,10 +210,10 @@ function App() {
 
     if (name === "input") {
       const value = event.target.value;
-      setInput(value);
+      setInputText(value);
     } else if (type === "submit") {
-      setItems([...items, input]);
-      setInput("");
+      setItems([...items, inputText]);
+      setInputText("");
     }
   }
   return (
@@ -227,7 +227,7 @@ function App() {
           name="input"
           placeholder="Enter an item"
           onChange={handleInput}
-          value={input}
+          value={inputText}
         />
 
         <button name="btn" onClick={handleInput}>
