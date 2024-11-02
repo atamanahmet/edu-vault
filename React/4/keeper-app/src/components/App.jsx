@@ -131,70 +131,70 @@
 // }
 // export default App;
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-function App() {
-  const [contact, setContact] = useState({
-    fName: "",
-    lName: "",
-    email: "",
-  });
+// function App() {
+//   const [contact, setContact] = useState({
+//     fName: "",
+//     lName: "",
+//     email: "",
+//   });
 
-  function handleChange(event) {
-    // const name = event.target.name;
-    // const value = event.target.value;
+//   function handleChange(event) {
+//     // const name = event.target.name;
+//     // const value = event.target.value;
 
-    const { name, value } = event.target;
+//     const { name, value } = event.target;
 
-    setContact((prevState) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
+//     setContact((prevState) => {
+//       return {
+//         ...prevState,
+//         [name]: value,
+//       };
+//     });
 
-    // if (name === "fName") {
-    //   setContact((prevState) => {
-    //     return {
-    //       fName: value,
-    //       lName: prevState.lName,
-    //       email: prevState.email,
-    //     };
-    //   });
-    // }
-    // if (name === "lName") {
-    //   setContact((prevState) => {
-    //     return {
-    //       fName: prevState.fName,
-    //       lName: value,
-    //       email: prevState.email,
-    //     };
-    //   });
-    // }
-    // if (name === "email") {
-    //   setContact((prevState) => {
-    //     return {
-    //       fName: prevState.fName,
-    //       lName: prevState.lName,
-    //       email: value,
-    //     };
-    //   });
-    // }
-  }
-  return (
-    <div className="container">
-      <h1>
-        Hello {contact.fName} {contact.lName}
-      </h1>
-      <p>{contact.email}</p>
-      <form>
-        <input name="fName" placeholder="First Name" onChange={handleChange} />
-        <input name="lName" placeholder="Last Name" onChange={handleChange} />
-        <input name="email" placeholder="Email" onChange={handleChange} />
-        <button>Submit</button>
-      </form>
-    </div>
-  );
-}
+//     // if (name === "fName") {
+//     //   setContact((prevState) => {
+//     //     return {
+//     //       fName: value,
+//     //       lName: prevState.lName,
+//     //       email: prevState.email,
+//     //     };
+//     //   });
+//     // }
+//     // if (name === "lName") {
+//     //   setContact((prevState) => {
+//     //     return {
+//     //       fName: prevState.fName,
+//     //       lName: value,
+//     //       email: prevState.email,
+//     //     };
+//     //   });
+//     // }
+//     // if (name === "email") {
+//     //   setContact((prevState) => {
+//     //     return {
+//     //       fName: prevState.fName,
+//     //       lName: prevState.lName,
+//     //       email: value,
+//     //     };
+//     //   });
+//     // }
+//   }
+//   return (
+//     <div className="container">
+//       <h1>
+//         Hello {contact.fName} {contact.lName}
+//       </h1>
+//       <p>{contact.email}</p>
+//       <form>
+//         <input name="fName" placeholder="First Name" onChange={handleChange} />
+//         <input name="lName" placeholder="Last Name" onChange={handleChange} />
+//         <input name="email" placeholder="Email" onChange={handleChange} />
+//         <button>Submit</button>
+//       </form>
+//     </div>
+//   );
+// }
 
-export default App;
+// export default App;
