@@ -1,14 +1,19 @@
 import React from "react";
 
 function Note(props) {
-  console.log(props);
-  return (
-    <div className="note">
-      <h1>{props.title}</h1>
-      <p>{props.note}</p>
-      <button>DELETE</button>
-    </div>
-  );
+  if (props.title) {
+    return (
+      <div className="note" id={props.id}>
+        <h1>{props.title}</h1>
+        <p>{props.note}</p>
+        <button onClick={props.deleteItem} id={props.id}>
+          DELETE
+        </button>
+      </div>
+    );
+  } else {
+    console.log("noprops");
+  }
 }
 
 export default Note;
