@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-// import Note from "./Note";
-// import CreateArea from "./CreateArea";
+import Note from "./Note";
+import CreateArea from "./CreateArea";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -17,36 +17,47 @@ function App() {
     } else if (name === "note") {
       setNote(value);
     }
-    console.log(title);
-    console.log(note);
   }
-  function addItem() {
+
+  function addItem(event) {
+    event.preventDefault();
     setItems((prevState) => {
-      return [...prevState, { note: note, title: title }];
+      return [...prevState, { title: title, note: note }];
     });
-    JSON.stringify(items);
+    setTitle("");
+    setNote("");
+  }
+  function deleteItem(event) {
+    const id = Number(event.target.id);
+    setItems(
+      items.filter((item, index) => {
+        return index !== id;
+      })
+    );
+    console.log(items);
   }
 
   return (
     <div>
       <Header />
-      {/* <CreateArea onDone={addItem} handleChange={handleChange} /> */}
-      <div>
-        <form>
-          <input name="title" placeholder="Title" onChange={handleChange} />
-          <textarea
-            name="note"
-            placeholder="Take a note..."
-            rows="3"
-            onChange={handleChange}
-          />
-          <button onClick={addItem}>Add</button>
-        </form>
-      </div>
-      {/* 
-      {items.map((item) => {
-        <Note title={item.title} />;
-      })} */}
+      <CreateArea
+        handleChange={handleChange}
+        addItem={addItem}
+        note={note}
+        title={title}
+      />
+      {items.map((item, index) => {
+        return (
+          <Note
+            deleteItem={deleteItem}
+            title={item.title}
+            note={item.note}
+            key={index}
+            id={index}
+          ></Note>
+        );
+      })}
+
       <Footer />
     </div>
   );
