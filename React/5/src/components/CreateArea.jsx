@@ -48,7 +48,9 @@ function CreateArea(props) {
           onChange={handleChange}
           value={note.note}
         />
-        <button onClick={submitNote}>Add</button>
+        <button onClick={submitNote}>
+          <AddIcon />
+        </button>
       </form>
     </div>
   );

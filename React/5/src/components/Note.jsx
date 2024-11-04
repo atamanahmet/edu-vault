@@ -13,7 +13,7 @@ function Note(props) {
           }}
           id={props.id}
         >
-          DELETE
+          <DeleteIcon />
         </button>
       </div>
     );
