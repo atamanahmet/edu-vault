@@ -6,7 +6,7 @@ import { Zoom } from "@mui/material";
 function CreateArea(props) {
   // const [note, setNote] = useState("");
   // const [title, setTitle] = useState("");
-
+  const [check, setCheck] = useState(false);
   const [note, setNote] = useState({
     title: "",
     note: "",
@@ -35,22 +35,34 @@ function CreateArea(props) {
   return (
     <div>
       <form className="create-note">
-        <input
-          name="title"
-          placeholder="Title"
-          onChange={handleChange}
-          value={note.title}
-        />
+        {check && (
+          <input
+            name="title"
+            placeholder="Title"
+            onChange={handleChange}
+            value={note.title}
+          />
+        )}
         <textarea
           name="note"
           placeholder="Take a note..."
-          rows="3"
+          rows={check ? "3" : "1"}
           onChange={handleChange}
+          onClick={() => {
+            setCheck(true);
+          }}
           value={note.note}
         />
-        <button onClick={submitNote}>
-          <AddIcon />
-        </button>
+        <Zoom in={check}>
+          <Fab
+            size="small"
+            color="secondary"
+            aria-label="add"
+            onClick={submitNote}
+          >
+            <AddIcon />
+          </Fab>
+        </Zoom>
       </form>
     </div>
   );
