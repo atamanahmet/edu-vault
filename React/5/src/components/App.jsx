@@ -31,7 +31,7 @@ function App() {
           <Note
             key={index}
             id={index}
-            title={item.title}
+            title={item.title ? item.title : "No title"}
             note={item.note}
             deleteItem={deleteItem}
           ></Note>
