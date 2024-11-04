@@ -7,9 +7,9 @@ import CreateArea from "./CreateArea";
 function App() {
   const [items, setItems] = useState([]);
 
-  function addItem(note, title) {
+  function addItem(note) {
     setItems((prevState) => {
-      return [...prevState, { title: title, note: note }];
+      return [...prevState, { title: note.title, note: note.note }];
     });
   }
 
@@ -29,11 +29,11 @@ function App() {
       {items.map((item, index) => {
         return (
           <Note
-            deleteItem={deleteItem}
-            title={item.title}
-            note={item.note}
             key={index}
             id={index}
+            title={item.title}
+            note={item.note}
+            deleteItem={deleteItem}
           ></Note>
         );
       })}

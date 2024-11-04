@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function CreateArea(props) {
   // const [note, setNote] = useState("");
   // const [title, setTitle] = useState("");
+
   const [note, setNote] = useState({
     title: "",
     note: "",
@@ -22,9 +23,9 @@ function CreateArea(props) {
     //   }
   }
 
-  function add(event) {
+  function submitNote(event) {
     event.preventDefault();
-    props.addItem(note.note, note.title);
+    props.addItem(note);
     setNote({ note: "", title: "" });
   }
 
@@ -44,7 +45,7 @@ function CreateArea(props) {
           onChange={handleChange}
           value={note.note}
         />
-        <button onClick={add}>Add</button>
+        <button onClick={submitNote}>Add</button>
       </form>
     </div>
   );
