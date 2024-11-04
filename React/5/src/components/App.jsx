@@ -8,8 +8,6 @@ function App() {
   const [items, setItems] = useState([]);
 
   function addItem(note, title) {
-    // event.preventDefault();
-
     setItems((prevState) => {
       return [...prevState, { title: title, note: note }];
     });
