@@ -8,6 +8,7 @@ html {
 }
 body {
   background: #eee;
+  background-image: url("https://www.transparenttextures.com/patterns/bright-squares.png");
   padding: 0 16px;
 }
 
@@ -33,7 +34,8 @@ footer {
 }
 
 footer p {
-  color: #ccc;
+  text-shadow: 1px 1px 3px black;
+  color: #ffffff;
 }
 .note {
   background: #fff;
