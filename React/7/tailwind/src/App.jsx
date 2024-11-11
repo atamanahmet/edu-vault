@@ -6,9 +6,11 @@ function App() {
 
   return (
     <>
-      <div className="bg-primary h-14 flex flex-row flex-nowrap items-center">
-        <Search />
-        <Nav />
+      <div className="bg-primary h-14 ">
+        <div className="flex flex-row flex-nowrap items-center">
+          <Search />
+          <Nav />
+        </div>
       </div>
     </>
   );
