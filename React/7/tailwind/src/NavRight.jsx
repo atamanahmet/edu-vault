@@ -1,7 +1,12 @@
 function NavRight() {
   return (
-    <div>
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="flex flex-row flex-nowrap items-center">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-10"
+      >
         <g id="SVGRepo_iconCarrier">
           {" "}
           <path
