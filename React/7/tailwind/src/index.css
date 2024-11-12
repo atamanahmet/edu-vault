@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#search-icon {
+  left: -4px;
+}
+@media screen and (max-width: 1340px) {
+  #search-box {
+    width: 9px;
+  }
+}
+#nav-header {
+  border-bottom: 1px solid #888a8d7c;
+}

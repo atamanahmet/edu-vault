@@ -1,7 +1,7 @@
-import profile from "./img/profile.jpg";
+import ProfilePic from "./ProfilePic";
 function NavRight() {
   return (
-    <div className="flex flex-row flex-nowrap items-center w-screen gap-x-2">
+    <div className="flex gap-x-2 mr-2">
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -80,13 +80,7 @@ function NavRight() {
           ></path>{" "}
         </g>
       </svg>
-      <a href="/profile">
-        <img
-          src={profile}
-          alt="profile photo"
-          className="h-10 w-10 rounded-full"
-        />
-      </a>
+      <ProfilePic></ProfilePic>
     </div>
   );
 }

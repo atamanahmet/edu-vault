@@ -1,21 +1,29 @@
 // import React from "react";
 import logo from "./img/f_logo.svg";
-import search from "./img/search.svg";
+import SearchButton from "./SearchButton";
 
 function Search() {
-  return (
-    <div className="flex flex-row flex-nowrap items-center">
-      <img src={logo} alt="fafelogo" className="h-14 p-2" />
+  let asd = false;
+  function hideIcon(event) {
+    // document.getElementById("search-button").style.display = "none";
+    asd = true;
+  }
 
-      <label htmlFor="search">
-        <img src={search} alt="" className="h-4 absolute z-1 top-5 left-20" />
-      </label>
-      <input
-        type="text"
-        name="search"
-        className=" bg-secondary rounded-full m-2 h-10 pl-10 pb-1"
-        placeholder="Search Facebook"
-      />
+  return (
+    <div className="flex">
+      <img src={logo} alt="f-logo" className="h-14 p-2" />
+      <div className="inline-block">
+        <SearchButton />
+        <input
+          dir="ltr"
+          type="text"
+          name="search"
+          id="search-box"
+          className="bg-secondary absolute text-[#a8abaf] outline-none  rounded-full m-2 ml-1 h-10 pl-8 pb-1 pt-0.5"
+          placeholder={"Search Facebook"}
+          onFocus={hideIcon}
+        />
+      </div>
     </div>
   );
 }

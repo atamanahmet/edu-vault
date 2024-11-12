@@ -1,12 +1,15 @@
 function Nav() {
   return (
-    <div id="navigation" className="flex flex-row flex-nowrap items-center">
-      <a href="/home" className="md:px-12 py-2.5 nav hover:bg-secondary">
+    <div id="navigation" className="flex mr-32 gap-x-4 items-center ">
+      <a
+        href="/home"
+        className="md:px-12 py-2.5 nav hover:bg-secondary rounded-lg"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           id="home"
-          className="h-8"
+          className="h-7"
         >
           <path
             fill="#66686b"
@@ -15,10 +18,13 @@ function Nav() {
           ></path>
         </svg>
       </a>
-      <a href="/home" className="md:px-12 py-2 nav hover:bg-secondary">
+      <a
+        href="/home"
+        className="md:px-12 py-2.5 h-12 nav hover:bg-secondary rounded-lg"
+      >
         {" "}
         <svg
-          className="h-9"
+          className="h-7"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 64 64"
           id="video"
@@ -29,14 +35,17 @@ function Nav() {
           ></path>
         </svg>
       </a>
-      <a href="/home" className="md:px-12 py-3 nav hover:bg-secondary">
+      <a
+        href="/home"
+        className="md:px-12 py-2.5 nav hover:bg-secondary rounded-lg"
+      >
         <svg
           fill="#888a8d"
           viewBox="0 0 200 200"
           data-name="Layer 1"
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
-          className="h-8"
+          className="h-7"
         >
           <g id="SVGRepo_bgCarrier"></g>
           <g id="SVGRepo_tracerCarrier"></g>
@@ -46,12 +55,15 @@ function Nav() {
           </g>
         </svg>
       </a>
-      <a href="/home" className="md:px-12 py-0.5 nav hover:bg-secondary">
+      <a
+        href="/home"
+        className="md:px-12 py-2.5 nav hover:bg-secondary rounded-lg"
+      >
         <svg
-          fill="#55585a"
+          fill="#888a8d"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 100 100"
-          className="h-12"
+          className="h-7 bg-secondary rounded-full overflow-hidden border-2 border-[#888a8d]"
         >
           <g>
             {" "}
@@ -67,10 +79,13 @@ function Nav() {
           </g>{" "}
         </svg>
       </a>
-      <a href="/home" className="md:px-12 py-3 nav hover:bg-secondary">
+      <a
+        href="/home"
+        className="md:px-12 py-3 nav hover:bg-secondary rounded-lg"
+      >
         {" "}
         <svg
-          className="h-7"
+          className="h-6"
           version="1.1"
           id="_x32_"
           xmlns="http://www.w3.org/2000/svg"
