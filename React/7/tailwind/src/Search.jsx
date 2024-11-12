@@ -3,12 +3,6 @@ import logo from "./img/f_logo.svg";
 import SearchButton from "./SearchButton";
 
 function Search() {
-  let asd = false;
-  function hideIcon(event) {
-    // document.getElementById("search-button").style.display = "none";
-    asd = true;
-  }
-
   return (
     <div className="flex">
       <img src={logo} alt="f-logo" className="h-14 p-2" />
@@ -21,7 +15,6 @@ function Search() {
           id="search-box"
           className="bg-secondary absolute text-[#a8abaf] outline-none  rounded-full m-2 ml-1 h-10 pl-8 pb-1 pt-0.5"
           placeholder={"Search Facebook"}
-          onFocus={hideIcon}
         />
       </div>
     </div>
